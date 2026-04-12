@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -117,7 +117,7 @@
         }
 
         .panel {
-            padding: 24px;
+            padding: 40px 32px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -126,7 +126,7 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             color: #64748b;
             /* slate-500 */
         }
@@ -154,16 +154,18 @@
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
             display: block;
             font-size: 12px;
-            margin-bottom: 6px;
+            margin-bottom: 20px;
             color: #475569;
             /* slate-600 */
             font-weight: 500;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
         }
 
         .form-control {
@@ -510,16 +512,19 @@
 
         .radio-group {
             display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 32px;
+            margin-top: 12px;
         }
 
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
             font-size: 12px;
             cursor: pointer;
+            line-height: 1.8;
         }
 
         .radio-label input {
@@ -1744,9 +1749,9 @@
                             <div className="panel" style={{ opacity: file ? 1 : 0.5, pointerEvents: file ? 'auto' : 'none' }}>
                                 <div className="section-title">3. Map Appearance</div>
 
-                                <div className="form-group" style={{ marginBottom: '12px' }}>
+                                <div className="form-group" style={{ marginBottom: '40px' }}>
                                     <label>Marker Style (Shape / Icon)</label>
-                                    <div className="radio-group" style={{ marginBottom: '8px' }}>
+                                    <div className="radio-group">
                                         <label className="radio-label">
                                             <input type="radio" name="colorMode" checked={colorMode === 'single'} onChange={() => setColorMode('single')} />
                                             Single
@@ -1774,7 +1779,7 @@
                                 </div>
 
                                 {colorMode === 'category' && (
-                                    <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                    <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                         <div>
                                             <label>Color Category Column</label>
                                             <select className="form-control" value={categoryCol} onChange={e => { setCategoryCol(e.target.value); setManualCategoryStyles({}); }}>
@@ -1805,7 +1810,7 @@
                                                         {uniqueCategoryVals.map((val, i) => {
                                                             const style = manualCategoryStyles[val] || { color: PALETTE[i % PALETTE.length], iconUrl: 'VECTOR_CIRCLE' };
                                                             return (
-                                                                <div key={val} className="category-style-row" onClick={() => { setEditingCategory(val); setShowIconPicker(true); }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', padding: '6px', background: 'white', border: '1px solid #e2e8f0', borderRadius: '4px', cursor: 'pointer' }}>
+                                                                <div key={val} className="category-style-row" onClick={() => { setEditingCategory(val); setShowIconPicker(true); }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', padding: '8px 10px', background: 'white', border: '1px solid #e2e8f0', borderRadius: '4px', cursor: 'pointer' }}>
                                                                     <span style={{ fontSize: '11px', color: '#475569', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '8px', flex: 1 }}>{val}</span>
                                                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                                         <div style={{ width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyItems: 'center', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
