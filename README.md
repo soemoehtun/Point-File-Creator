@@ -1,40 +1,83 @@
 # Point File Creator
 
-A professional, high-fidelity GIS web application for visualizing data and creating customized point files (KML/CSV). Built with React and Leaflet, optimized for performance and professional GIS workflows.
+A web-based tool for creating point-based maps from CSV/Excel data and exporting to KML format.
 
-## 🚀 Key Features
+## Features
 
-- **Professional Iconry**: Integrated access to 450+ official Google Earth icons (Pushpins, Paddles, Shapes, and Palettes 2-5).
-- **Per-Category Styling**: Assign unique icons, colors, and scales to individual data categories.
-- **Dynamic Preview**: Real-time visual feedback in the sidebar and on the interactive map.
-- **Performance Engine**: Uses Leaflet vector rendering to handle thousands of points without lag.
-- **KML/CSV Export**: Professional KML export with style preservation and automatic fallbacks for non-native shapes.
-- **Multi-Layer Map**: Toggle between Google Maps, Satellite, Terrain, and OpenStreetMap views.
+### Data Import
+- Support for CSV and Excel files (.csv, .xlsx, .xls)
+- Drag-and-drop or click to upload
+- Automatic column detection
 
-## 🛠 Tech Stack
+### Column Mapping
+- Map latitude and longitude columns
+- Map site name column
+- Select popup columns for marker info windows
 
-- **Framework**: React 18
-- **Mapping**: Leaflet.js
-- **Styling**: Vanilla CSS (Premium Slate/Blue theme)
-- **Icons**: Lucide/Feather icon set
-- **Assets**: Dynamically fetched Google Earth (GE) icon library
+### Styling Options
+- **Single Color Mode**: All markers use the same color
+- **Category Mode**: Different colors/icons per category
+  - Manual Color & Icon assignment for each category
+  - Google Earth icons selection
+  - Vector circle option
+- Adjustable marker size and opacity
+- Default icon picker with preview
 
-## 📖 How to Use
+### Map Controls
+- Toggle legend visibility
+- Toggle site labels on map
+- Multiple base map layers (OpenStreetMap, Satellite, Terrain, etc.)
+- Zoom and pan controls
 
-1. **Upload Data**: Drag and drop your CSV file into the sidebar.
-2. **Map Columns**: Assign Latitude, Longitude, and Name columns from your data.
-3. **Customize Style**:
-   - **Single Mode**: Set a global icon and color.
-   - **Categorized Mode**: Select a category column and assign unique icons for every value.
-4. **View & Filter**: Use the interactive map and search filters to explore your data.
-5. **Download**: Click **Export KML** to generate a GIS-ready file for use in Google Earth or ArcGIS.
+### Filter & Search
+- Search by site name
+- Filter data by category
 
-## 🎨 Icon Customization
+### Export
+- Export to KML format with:
+  - Custom icons and colors
+  - Popup information
+  - Category-based styling
 
-The **Icon Picker** allows you to:
-- Choose from 450+ bitmap and vector icons.
-- Dynamically color any bitmap icon using CSS masking.
-- Adjust global scale and opacity of all markers simultaneously.
+## Usage
 
----
-*Created with focus on speed, precision, and GIS standards.*
+1. **Upload Data**: Click "Upload" tab or drag-drop a CSV/Excel file
+2. **Map Columns**: Go to "Columns" tab and map:
+   - Latitude column
+   - Longitude column
+   - Site Name column (optional)
+   - Popup columns (optional)
+3. **Style Markers**: In "Style" tab:
+   - Choose single or category color mode
+   - Adjust marker size and opacity
+   - Pick custom icons
+4. **Filter Data**: Use "Filter" tab to search/filter points
+5. **Draw & Export**:
+   - Click "Calculate & Draw" to display markers on map
+   - Click "Export KML" to download
+
+## Keyboard Shortcuts
+
+- `Ctrl+Enter`: Calculate & Draw
+- `Ctrl+E`: Export KML
+- `Ctrl+L`: Toggle Legend
+- `Ctrl+B`: Toggle Sidebar
+
+## Browser Compatibility
+
+- Chrome (recommended)
+- Firefox
+- Edge
+- Safari
+
+## Technical Details
+
+- Built with React 18
+- Leaflet.js for mapping
+- PapaParse for CSV parsing
+- SheetJS for Excel handling
+- Single HTML file, no build required
+
+## License
+
+MIT
