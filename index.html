@@ -145,8 +145,9 @@
         }
 
         .tab-btn svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
         }
 
         .panel-section {
@@ -345,18 +346,23 @@
             white-space: nowrap;
         }
 
+        @media (max-width: 480px) {
+            .tab-btn { gap: 3px; }
+            .tab-btn span { font-size: 10px; }
+        }
+
         @media (max-width: 500px) {
-            .icon-picker-actions,
-            .icon-picker-confirm {
+            .modal-footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .modal-footer > div {
                 width: 100%;
+                justify-content: stretch;
             }
-            .icon-picker-actions .btn-sm {
-                flex: 1 1 45%;
-                font-size: 10px;
-                padding: 8px 4px;
-            }
-            .icon-picker-confirm .btn {
+            .modal-footer .btn {
                 flex: 1;
+                min-width: 0;
             }
         }
 
@@ -448,6 +454,8 @@
 
         .leaflet-popup-content {
             margin: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
         }
 
         .site-label-tooltip {
@@ -539,24 +547,19 @@
         }
 
         .layer-switcher-collapsed {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 4px;
             background: #fff;
-            border: 2px solid rgba(15, 23, 42, 0.15);
-            /* slate-900 15% */
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
-            /* slate-900 15% */
+            border: 2px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
             cursor: pointer;
             overflow: hidden;
             transition: all 0.2s ease;
         }
 
         .layer-switcher-collapsed:hover {
-            border-color: rgba(15, 23, 42, 0.3);
-            /* slate-900 30% */
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-            /* slate-900 20% */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
         .layer-switcher-collapsed img {
@@ -776,31 +779,20 @@
 
 
 
-        /* Responsive Adjustments */
+        /* ── Responsive ──────────────────────── */
         @media (max-width: 768px) {
-            :root {
-                --sidebar-width: 100%;
-            }
+            :root { --sidebar-width: 100%; }
 
             .sidebar {
                 width: 100%;
                 z-index: 3000;
-                /* Above everything */
             }
 
             .main-content {
                 left: 0 !important;
             }
 
-            .sidebar-header,
-            .panel {
-                padding: 16px;
-            }
-
-            .main-header {
-                padding: 0 12px;
-                gap: 8px;
-            }
+            .panel { padding: 12px; }
 
             .map-legend {
                 bottom: 12px;
@@ -812,8 +804,7 @@
             }
 
             .layer-switcher {
-                top: 60px;
-                /* Below header */
+                top: 12px;
                 right: 12px;
             }
 
@@ -822,21 +813,129 @@
             }
         }
 
+
+        /* ── Icon Picker Mobile ──────────────── */
+        @media (max-width: 560px) {
+            /* Keep modal as centered floating card, not full-screen */
+            .modal-container {
+                width: 95vw !important;
+                max-width: 95vw !important;
+                max-height: 88vh !important;
+                height: auto;
+                border-radius: 6px;
+            }
+
+            .modal-overlay {
+                align-items: center;
+                padding: 0;
+            }
+
+            /* Side-by-side: preview LEFT, controls stacked RIGHT */
+            .picker-top-controls {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .picker-preview-box {
+                width: 80px;
+                height: 80px;
+                flex-shrink: 0;
+            }
+
+            .picker-preview-box img {
+                max-width: 64px;
+                max-height: 64px;
+            }
+
+            /* Stack Scale / Opacity / Color vertically */
+            .picker-controls-col {
+                flex: 1;
+                gap: 4px;
+            }
+
+            .picker-controls-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .picker-controls-row label {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .picker-controls-row input[type="number"] {
+                width: 52px;
+            }
+
+            /* 6-column grid on mobile */
+            .icon-grid-all {
+                grid-template-columns: repeat(6, 1fr);
+                max-height: calc(88vh - 220px);
+                padding: 4px;
+            }
+
+            .icon-item-small {
+                width: 100%;
+                height: 42px;
+            }
+
+            .icon-item-small img {
+                max-width: 30px;
+                max-height: 30px;
+            }
+
+            /* Footer: two rows */
+            .modal-footer {
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 10px;
+                align-items: stretch;
+            }
+
+            .modal-footer > div {
+                width: 100%;
+                display: flex;
+                gap: 6px;
+            }
+
+            .modal-footer .btn,
+            .modal-footer .btn-outline {
+                flex: 1;
+                min-width: 0;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .icon-grid-all { grid-template-columns: repeat(5, 1fr); }
+            .tab-btn { gap: 2px; }
+            .tab-btn span { font-size: 9px; }
+        }
+
         .sidebar-close-btn {
             display: none;
             background: transparent;
             border: none;
             cursor: pointer;
-            padding: 8px;
+            padding: 5px;
             border-radius: 4px;
             color: var(--text);
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
         }
 
         .sidebar-close-btn:hover {
             background: #f1f5f9;
-            /* slate-100 */
         }
 
         /* Modal Header Red styling */
@@ -853,105 +952,133 @@
             font-weight: 600;
         }
 
+        /* ── Icon Picker ───────────────────────── */
         .picker-top-controls {
-            padding: 12px;
+            padding: 10px 12px 8px;
             background: #f1f1f1;
             border-bottom: 1px solid #ccc;
             display: flex;
-            gap: 20px;
-            align-items: center;
+            gap: 12px;
+            align-items: flex-start;
             font-size: 13px;
-        }
-        @media (max-width: 600px) {
-            .picker-top-controls {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .picker-preview-box {
-                width: 50px;
-                height: 50px;
-            }
-            .picker-preview-box img {
-                max-width: 40px;
-                max-height: 40px;
-            }
         }
 
         .picker-preview-box {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             background: white;
-            border: 1px solid #999;
+            border: 2px solid #aaa;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .picker-preview-box img {
+            max-width: 72px;
+            max-height: 72px;
+            object-fit: contain;
+        }
+
+        .picker-controls-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            justify-content: center;
+            padding-top: 4px;
+        }
+
+        .picker-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .picker-controls-row label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #222;
+            white-space: nowrap;
+        }
+
+        .picker-controls-row input[type="number"] {
+            width: 48px;
+            padding: 2px 4px;
+            border: 1px solid #aaa;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .picker-controls-row select {
+            padding: 2px 4px;
+            border: 1px solid #aaa;
+            font-size: 12px;
+            background: #fff;
         }
 
         .picker-url-input {
-            margin-top: 8px;
             width: 100%;
-            padding: 4px 8px;
-            border: 1px solid #999;
+            padding: 3px 6px;
+            border: 1px solid #aaa;
             font-family: monospace;
             font-size: 11px;
             background: white;
+            color: #333;
+            box-sizing: border-box;
         }
 
+        /* Icon Grid */
         .icon-grid-all {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2px;
-            background: white;
-            padding: 4px;
-            border: 1px solid #999;
-            max-height: 350px;
+            grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+            gap: 0;
+            background: #fff;
+            padding: 6px;
+            border: 1px solid #aaa;
+            max-height: 340px;
             overflow-y: auto;
-        }
-        @media (max-width: 600px) {
-            .icon-grid-all {
-                grid-template-columns: repeat(8, 1fr);
-                max-height: 250px;
-            }
-            .icon-item-small img {
-                max-width: 20px;
-                max-height: 20px;
-            }
         }
 
         .icon-item-small {
-            aspect-ratio: 1/1;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border: 1px solid transparent;
-            padding: 2px;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            background: #fff;
+            transition: background 0.1s;
         }
 
         .icon-item-small:hover {
-            background: #eef2ff;
-            border-color: #6366f1;
+            background: #dde8ff;
         }
 
         .icon-item-small.selected {
+            border: 2px solid #000;
             background: #fff;
-            border: 1.5px solid #000;
-            outline: 1px solid #fff;
         }
 
         .icon-item-small img {
-            max-width: 24px;
-            max-height: 24px;
+            max-width: 36px;
+            max-height: 36px;
+            object-fit: contain;
+            display: block;
         }
 
         .vector-circle-icon {
-            width: 16px;
-            height: 16px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border: 1.5px solid white;
-            box-shadow: 0 0 0 1px #666;
+            box-shadow: 0 0 0 1.5px #666;
         }
 
         .modal-overlay {
@@ -1178,19 +1305,20 @@
 
         const Icons = {
             Map: () => <svg width="16" height="16" viewBox="0 0 46.484 46.484" fill="currentColor"><path d="M3.749,37.402c0.79,0.392,1.636,0.59,2.513,0.59c2.169,0,4.113-1.205,5.076-3.146c1.156-2.33,0.548-5.076-1.302-6.732 l12.508-16.937c0.423,0.1,0.857,0.151,1.3,0.151c1.555,0,2.988-0.628,4.034-1.696l7.713,5.886 c-0.164,0.235-0.315,0.481-0.446,0.744c-1.188,2.392-0.515,5.225,1.453,6.864l-3.841,12.106c-0.284-0.045-0.571-0.074-0.863-0.074 c-2.168,0-4.112,1.205-5.075,3.146c-1.388,2.799-0.24,6.202,2.557,7.59c0.789,0.391,1.636,0.59,2.513,0.59 c2.169,0,4.112-1.205,5.076-3.146c1.187-2.393,0.515-5.225-1.453-6.864l3.841-12.106c0.284,0.045,0.571,0.074,0.864,0.074 c2.167,0,4.112-1.205,5.075-3.146c1.388-2.796,0.24-6.201-2.557-7.589c-0.791-0.392-1.637-0.591-2.514-0.591 c-0.787,0-1.542,0.163-2.232,0.458L29.35,6.981c0.6-2.508-0.58-5.195-2.986-6.39C25.572,0.199,24.727,0,23.85,0 c-2.168,0-4.112,1.206-5.076,3.147c-1.117,2.252-0.589,4.897,1.12,6.567L7.299,26.768c-0.338-0.062-0.681-0.104-1.03-0.104 c-2.168,0-4.112,1.207-5.075,3.148C-0.195,32.609,0.952,36.014,3.749,37.402z M34.275,42.006c-0.453,0.913-1.369,1.48-2.39,1.48 c-0.41,0-0.808-0.094-1.181-0.278c-1.314-0.652-1.854-2.253-1.2-3.569c0.452-0.912,1.366-1.48,2.388-1.48 c0.411,0,0.809,0.095,1.18,0.279C34.388,39.089,34.928,40.689,34.275,42.006z M41.4,16.394c1.314,0.653,1.854,2.254,1.202,3.568 c-0.452,0.913-1.368,1.48-2.389,1.48c-0.411,0-0.81-0.094-1.181-0.278c-1.315-0.652-1.854-2.253-1.203-3.568 c0.453-0.913,1.369-1.48,2.39-1.48C40.632,16.115,41.027,16.209,41.4,16.394z M21.461,4.482c0.453-0.913,1.368-1.48,2.389-1.48 c0.411,0,0.809,0.094,1.18,0.278c1.315,0.653,1.855,2.254,1.203,3.568c-0.453,0.913-1.367,1.48-2.389,1.48 c-0.411,0-0.809-0.094-1.181-0.278C21.347,7.398,20.808,5.797,21.461,4.482z M3.881,31.145c0.453-0.912,1.367-1.48,2.388-1.48 c0.411,0,0.808,0.095,1.18,0.279c1.315,0.651,1.854,2.252,1.202,3.568c-0.636,1.28-2.269,1.846-3.569,1.202 C3.766,34.062,3.228,32.461,3.881,31.145z"></path></svg>,
-            Upload: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>,
+            Upload: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>,
             Export: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
             Menu: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
             Trash: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>,
             Chevron: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>,
             X: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
-            User: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
-            Settings: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.81-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
+            User: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
+            Settings: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.81-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
             CloudUpload: () => <svg width="28" height="28" viewBox="0 0 24 24" fill="#94a3b8"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>,
-            Columns: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line></svg>,
-            Style: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a9 9 0 1 0 9 9c0-1.1-.9-2-2-2h-2.5a1.5 1.5 0 0 1 0-3H17a2 2 0 0 0 2-2 2 2 0 0 0-2-2h-5z"></path><circle cx="7.5" cy="9.5" r=".7"></circle><circle cx="10.5" cy="7.5" r=".7"></circle><circle cx="7.5" cy="14.5" r=".7"></circle></svg>,
-            Filter: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
-            Maximize: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+            Columns: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line></svg>,
+            Style: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>,
+            Filter: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>,
+            Search: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
+            Maximize: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
         };
 
         const PALETTE = ['#2563eb', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#14b8a6', '#84cc16', '#a855f7', '#f43f5e', '#6366f1'];
@@ -1234,8 +1362,8 @@
             'Palette 5': [...Array(64)].map((_, i) => `pal5/icon${i}.png`)
         };
 
-        const createCustomIcon = (iconUrl, color, size, opacity) => {
-            const s = size * 2.5;
+        const createCustomIcon = (iconUrl, color, scale, opacity) => {
+            const s = Math.round(24 * scale);
             const op = opacity / 100;
 
             if (!iconUrl || iconUrl === 'VECTOR_CIRCLE') {
@@ -1369,7 +1497,7 @@
 
                     if (iconUrl === 'VECTOR_CIRCLE') {
                         const marker = L.circleMarker([lat, lng], {
-                            radius: markerSize,
+                            radius: Math.round(8 * markerSize),
                             fillColor: color,
                             color: '#ffffff',
                             weight: 1.5,
@@ -1377,37 +1505,23 @@
                             opacity: 1
                         });
 
-                        let popupHTML = `<div style="font-family: 'Inter', sans-serif; font-size: 13px;">`;
-                        let hasPopup = false;
-
-                        if (mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
-                            popupHTML += `<div style="font-weight: 600; padding: 2px; border-bottom: 1px solid #e2e8f0; margin-bottom: 4px;">${row[mapping.siteName]}</div>`;
-                            hasPopup = true;
-                        }
+                        let popupHTML = `<div style="font-size: 13px;">${(mapping.siteName && row[mapping.siteName]) || ''}<hr style="margin: 4px 0;">`;
 
                         if (mapping.popupCols && mapping.popupCols.length > 0) {
                             mapping.popupCols.forEach(col => {
-                                popupHTML += `
-                                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding: 4px 0;">
-                                    <span style="font-weight: 600; color: #475569; padding-right: 12px; font-size: 12px;">${col}</span>
-                                    <span style="font-weight: 400; text-align: right; max-width: 150px; overflow-wrap: break-word; font-size: 12px;">${row[col] ?? ''}</span>
-                                </div>`;
+                                popupHTML += `<div><b>${col}:</b> ${row[col] ?? ''}</div>`;
                             });
-                            hasPopup = true;
                         }
 
                         popupHTML += `</div>`;
-
-                        if (hasPopup) {
-                            marker.bindPopup(popupHTML);
-                        }
+                        marker.bindPopup(popupHTML);
 
                         if (showSiteLabels && mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
                             marker.bindTooltip(row[mapping.siteName], {
                                 permanent: true,
                                 direction: 'top',
                                 className: 'site-label-tooltip',
-                                offset: [0, -markerSize]
+                                offset: [0, -(24 * markerSize)]
                             });
                         }
 
@@ -1418,37 +1532,24 @@
                         });
 
                         // Build Popup
-                        let popupHTML = `<div style="font-family: 'Inter', sans-serif; font-size: 13px;">`;
-                        let hasPopup = false;
-
-                        if (mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
-                            popupHTML += `<div style="font-weight: 600; padding: 2px; border-bottom: 1px solid #e2e8f0; margin-bottom: 4px;">${row[mapping.siteName]}</div>`;
-                            hasPopup = true;
-                        }
+                        let popupHTML = `<div style="font-size: 13px;">${(mapping.siteName && row[mapping.siteName]) || ''}<hr style="margin: 4px 0;">`;
 
                         if (mapping.popupCols && mapping.popupCols.length > 0) {
                             mapping.popupCols.forEach(col => {
-                                popupHTML += `
-                                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding: 4px 0;">
-                                    <span style="font-weight: 600; color: #475569; padding-right: 12px; font-size: 12px;">${col}</span>
-                                    <span style="font-weight: 400; text-align: right; max-width: 150px; overflow-wrap: break-word; font-size: 12px;">${row[col] ?? ''}</span>
-                                </div>`;
+                                popupHTML += `<div><b>${col}:</b> ${row[col] ?? ''}</div>`;
                             });
-                            hasPopup = true;
                         }
 
                         popupHTML += `</div>`;
+                        marker.bindPopup(popupHTML);
 
-                        if (hasPopup) {
-                            marker.bindPopup(popupHTML);
-                        }
 
                         if (showSiteLabels && mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
                             marker.bindTooltip(row[mapping.siteName], {
                                 permanent: true,
                                 direction: 'top',
                                 className: 'site-label-tooltip',
-                                offset: [0, -markerSize * 2]
+                                offset: [0, -(24 * markerSize)]
                             });
                         }
 
@@ -1463,11 +1564,15 @@
 
                 // Compile legend stats
                 if (colorMode === 'category' && categoryCol) {
-                    const sortedItems = Object.keys(catCounts).map(cat => ({
-                        label: cat,
-                        color: (colorAssignmentMode === 'manual' && manualCategoryStyles[cat]) ? manualCategoryStyles[cat].color : catColorsMap[cat],
-                        count: catCounts[cat]
-                    })).sort((a, b) => b.count - a.count);
+                    const sortedItems = Object.keys(catCounts).map(cat => {
+                        const manStyle = manualCategoryStyles[cat];
+                        return {
+                            label: cat,
+                            color: (colorAssignmentMode === 'manual' && manStyle) ? manStyle.color : catColorsMap[cat],
+                            iconUrl: (colorAssignmentMode === 'manual' && manStyle) ? manStyle.iconUrl : null,
+                            count: catCounts[cat]
+                        };
+                    }).sort((a, b) => b.count - a.count);
 
                     setLegendStats({ total: totalPlotted, items: sortedItems });
                 } else {
@@ -1492,7 +1597,11 @@
                                     {legendStats.items.map((item, idx) => (
                                         <div key={idx} className="legend-row">
                                             <div style={{ display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-                                                <span className="legend-color-box" style={{ background: item.color }}></span>
+                                                {item.iconUrl && item.iconUrl !== 'VECTOR_CIRCLE' ? (
+                                                    <img src={item.iconUrl} alt="" style={{ width: '14px', height: '14px', objectFit: 'contain', marginRight: '8px', flexShrink: 0 }} onError={e => { e.target.style.display='none'; }} />
+                                                ) : (
+                                                    <span className="legend-color-box" style={{ background: item.color }}></span>
+                                                )}
                                                 <span className="legend-label" title={item.label}>{item.label || 'N/A'}</span>
                                             </div>
                                             <span className="legend-count">{item.count}</span>
@@ -1608,7 +1717,7 @@
 
             return (
                 <div className="layer-switcher" ref={wrapperRef}>
-                    <div className="layer-switcher-expanded">
+                    <div className="layer-switcher-expanded" onMouseLeave={() => setExpanded(false)}>
                         {layers.map(key => (
                             <div
                                 key={key}
@@ -1629,98 +1738,179 @@
         const IconPicker = ({ isOpen, onClose, onSelect, currentIconUrl, currentSize, currentOpacity, currentSingleColor, setMarkerSize, setMarkerOpacity, setSingleColor }) => {
             const allIcons = useMemo(() => {
                 const flat = [];
-                // Add Vector Circle first
                 flat.push({ type: 'vector', id: 'VECTOR_CIRCLE', label: 'Vector Circle' });
-
                 Object.values(GE_ICONS).forEach(list => {
                     list.forEach(path => {
-                        const url = typeof path === 'number' ? `${GE_ICON_BASE}/paddle/${path}.png` : (path.startsWith('http') ? path : `${GE_ICON_BASE}/${path}`);
-                        flat.push({ type: 'img', url: url, path: path });
+                        const url = typeof path === 'number'
+                            ? `${GE_ICON_BASE}/paddle/${path}.png`
+                            : (path.startsWith('http') ? path : `${GE_ICON_BASE}/${path}`);
+                        flat.push({ type: 'img', url, path });
                     });
                 });
                 return flat;
             }, []);
 
+            const [urlVal, setUrlVal] = React.useState(
+                currentIconUrl === 'VECTOR_CIRCLE' ? 'VECTOR_CIRCLE_DESIGN' : (currentIconUrl || '')
+            );
+            React.useEffect(() => {
+                setUrlVal(currentIconUrl === 'VECTOR_CIRCLE' ? 'VECTOR_CIRCLE_DESIGN' : (currentIconUrl || ''));
+            }, [currentIconUrl]);
+
             if (!isOpen) return null;
 
+            const scaleVal = Math.max(1, Math.round(currentSize / 6));
+            const btnBase = {
+                padding: '4px 12px', fontSize: '12px', background: '#f5f5f5',
+                border: '1px solid #ccc', borderRadius: '2px', cursor: 'pointer',
+                fontFamily: 'Tahoma, Arial, sans-serif', lineHeight: '1.4', whiteSpace: 'nowrap'
+            };
+            const btnOk = { ...btnBase, border: '1px solid #777', padding: '4px 20px' };
+
             return (
-                <div className="modal-overlay" onClick={onClose} style={{ zIndex: 10001 }}>
-                    <div className="modal-container" style={{ width: '600px', maxWidth: '95vw', maxHeight: '85vh' }} onClick={e => e.stopPropagation()}>
-                        <div className="modal-header red">
-                            <span>Icon</span>
-                            <button className="toggle-btn" style={{ color: 'white', border: 'none', padding: '0' }} onClick={onClose}>
-                                <Icons.X />
-                            </button>
+                <div onClick={onClose} style={{
+                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    padding: '16px', zIndex: 10001
+                }}>
+                    <div onClick={e => e.stopPropagation()} style={{
+                        background: '#f0f0f0', width: '100%', maxWidth: '560px', maxHeight: '90vh',
+                        borderRadius: '4px', border: '1px solid #bbb',
+                        display: 'flex', flexDirection: 'column', overflow: 'hidden',
+                        boxShadow: '0 6px 24px rgba(0,0,0,0.25)', fontFamily: 'Tahoma, Arial, sans-serif'
+                    }}>
+
+                        {/* Header */}
+                        <div style={{
+                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                            background: '#e04040', padding: '6px 12px', color: 'white', flexShrink: 0
+                        }}>
+                            <span style={{ fontSize: '13px', fontWeight: 'bold' }}>Icon</span>
+                            <button onClick={onClose} style={{
+                                background: 'none', border: 'none', color: 'white',
+                                cursor: 'pointer', fontWeight: 'bold', fontSize: '16px', lineHeight: 1, padding: '0 2px'
+                            }}>✕</button>
                         </div>
 
-                        <div className="picker-top-controls">
-                            <div className="picker-preview-box">
-                                {currentIconUrl === 'VECTOR_CIRCLE' ? (
-                                    <div className="vector-circle-icon" style={{ background: currentSingleColor, width: '40px', height: '40px' }}></div>
-                                ) : (
-                                    <img src={currentIconUrl} alt="Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                )}
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <div className="picker-controls" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                        <span style={{ fontSize: '12px' }}>Color:</span>
-                                        <input type="color" value={currentSingleColor} onChange={e => setSingleColor(e.target.value)} style={{ width: '30px', height: '30px', padding: 0, border: '1px solid #999' }} />
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                        <span style={{ fontSize: '12px' }}>Scale:</span>
-                                        <input type="number" value={Math.round(currentSize / 6)} onChange={e => setMarkerSize(parseInt(e.target.value) * 6)} style={{ width: '50px', padding: '2px' }} />
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                        <span style={{ fontSize: '12px' }}>Opacity:</span>
-                                        <select value={currentOpacity} onChange={e => setMarkerOpacity(parseInt(e.target.value))} style={{ padding: '2px' }}>
-                                            <option value="100">100%</option>
-                                            <option value="75">75%</option>
-                                            <option value="50">50%</option>
-                                            <option value="25">25%</option>
-                                        </select>
-                                    </div>
+                        {/* Body */}
+                        <div style={{ padding: '12px', overflowY: 'auto', flex: 1 }}>
+
+                            {/* Top: preview + controls */}
+                            <div style={{ display: 'flex', gap: '12px', marginBottom: '12px', alignItems: 'flex-start' }}>
+
+                                {/* Preview box */}
+                                <div style={{
+                                    width: '84px', height: '84px', flexShrink: 0,
+                                    background: 'white', border: '1px solid #a0a0a0',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                }}>
+                                    {currentIconUrl === 'VECTOR_CIRCLE' ? (
+                                        <div style={{
+                                            width: '52px', height: '52px', borderRadius: '50%',
+                                            background: currentSingleColor,
+                                            border: '2px solid white', boxShadow: '0 0 0 1.5px #666'
+                                        }} />
+                                    ) : (
+                                        <img src={currentIconUrl} alt="Preview"
+                                            style={{ width: '64px', height: '64px', objectFit: 'contain' }}
+                                            onError={e => { e.target.style.opacity = '0.2'; }}
+                                        />
+                                    )}
                                 </div>
-                                <input
-                                    className="picker-url-input"
-                                    value={currentIconUrl === 'VECTOR_CIRCLE' ? 'VECTOR_CIRCLE_DESIGN' : currentIconUrl}
-                                    readOnly
-                                />
-                            </div>
-                        </div>
 
-                        <div className="modal-body" style={{ background: '#ddd', padding: '10px' }}>
-                            <div className="icon-grid-all">
-                                {allIcons.map((item, idx) => {
-                                    const itemUrl = item.url || item.id;
-                                    return (
-                                    <div
-                                        key={idx}
-                                        className={`icon-item-small ${(currentIconUrl === itemUrl || (item.type === 'vector' && currentIconUrl === 'VECTOR_CIRCLE')) ? 'selected' : ''}`}
-                                        onClick={() => { onSelect(itemUrl); }}
-                                        title={item.path || item.label}
-                                    >
-                                        {item.type === 'vector' ? (
-                                            <div className="vector-circle-icon" style={{ background: currentSingleColor }}></div>
-                                        ) : (
-                                            <img src={item.url} alt="Icon" loading="lazy" />
-                                        )}
+                                {/* Controls */}
+                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                            <span style={{ fontSize: '12px', color: '#333' }}>Scale:</span>
+                                            <input type="number" min="1" max="10" value={scaleVal}
+                                                onChange={e => setMarkerSize(Math.max(1, parseInt(e.target.value) || 1) * 6)}
+                                                style={{ width: '48px', fontSize: '12px', border: '1px solid #a0a0a0', padding: '2px 4px' }}
+                                            />
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                            <span style={{ fontSize: '12px', color: '#333' }}>Opacity:</span>
+                                            <select value={currentOpacity}
+                                                onChange={e => setMarkerOpacity(parseInt(e.target.value))}
+                                                style={{ border: '1px solid #a0a0a0', fontSize: '12px', padding: '2px 4px' }}>
+                                                <option value="100">100%</option>
+                                                <option value="75">75%</option>
+                                                <option value="50">50%</option>
+                                                <option value="25">25%</option>
+                                            </select>
+                                        </div>
+
                                     </div>
-                                    );
-                                })}
+                                    <input type="text" value={urlVal}
+                                        onChange={e => setUrlVal(e.target.value)}
+                                        style={{
+                                            width: '100%', fontSize: '11px', padding: '4px 6px',
+                                            border: '1px solid #a0a0a0', background: 'white',
+                                            fontFamily: 'monospace', color: '#333', boxSizing: 'border-box'
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="modal-footer" style={{ background: '#f1f1f1' }}>
-                            <div className="icon-picker-actions" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                                <button className="btn btn-outline btn-sm">Add Custom</button>
-                                <button className="btn btn-outline btn-sm">Clear Custom</button>
-                                <button className="btn btn-outline btn-sm" onClick={() => { onSelect('VECTOR_CIRCLE'); }}>No Icon</button>
+                            {/* Icon Grid */}
+                            <div style={{
+                                background: 'white', border: '1px solid #a0a0a0',
+                                height: '240px', overflowY: 'auto', padding: '6px'
+                            }}>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
+                                    gap: '2px'
+                                }}>
+                                    {allIcons.map((item, idx) => {
+                                        const itemUrl = item.url || item.id;
+                                        const isSel = currentIconUrl === itemUrl ||
+                                            (item.type === 'vector' && currentIconUrl === 'VECTOR_CIRCLE');
+                                        return (
+                                            <div key={idx}
+                                                onClick={() => onSelect(itemUrl)}
+                                                title={item.path || item.label}
+                                                style={{
+                                                    padding: '4px', cursor: 'pointer', boxSizing: 'border-box',
+                                                    border: isSel ? '2px solid #000' : '2px solid transparent',
+                                                    background: isSel ? '#fff' : 'transparent',
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                                }}
+                                            >
+                                                {item.type === 'vector' ? (
+                                                    <div style={{
+                                                        width: '24px', height: '24px', borderRadius: '50%',
+                                                        background: currentSingleColor,
+                                                        border: '1.5px solid white', boxShadow: '0 0 0 1.5px #666'
+                                                    }} />
+                                                ) : (
+                                                    <img src={item.url} alt="" loading="lazy"
+                                                        style={{ width: '30px', height: '30px', objectFit: 'contain', display: 'block' }}
+                                                        onError={e => { e.target.style.display = 'none'; }}
+                                                    />
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                            <div className="icon-picker-confirm" style={{ display: 'flex', gap: '8px' }}>
-                                <button className="btn" onClick={onClose}>OK</button>
-                                <button className="btn btn-outline" onClick={onClose}>Cancel</button>
+
+                            {/* Footer */}
+                            <div style={{
+                                display: 'flex', justifyContent: 'space-between',
+                                marginTop: '12px', flexWrap: 'wrap', gap: '8px'
+                            }}>
+                                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                    <button style={btnBase}>Add Custom...</button>
+                                    <button style={btnBase}>Clear Custom</button>
+                                    <button style={btnBase} onClick={() => onSelect('VECTOR_CIRCLE')}>No Icon</button>
+                                </div>
+                                <div style={{ display: 'flex', gap: '6px' }}>
+                                    <button style={btnOk} onClick={onClose}>OK</button>
+                                    <button style={btnBase} onClick={onClose}>Cancel</button>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -1728,6 +1918,7 @@
         };
 
         const App = () => {
+
             const [file, setFile] = useState(null);
             const [data, setData] = useState([]);
             const [columns, setColumns] = useState([]);
@@ -1738,7 +1929,8 @@
             const [showIconPicker, setShowIconPicker] = useState(false);
             const [editingCategory, setEditingCategory] = useState(null); // null means editing global, string means editing category
 
-            const [markerSize, setMarkerSize] = useState(6);
+            const [markerSize, setMarkerSize] = useState(1.0);
+
             const [markerOpacity, setMarkerOpacity] = useState(100);
 
             const [colorMode, setColorMode] = useState('single');
@@ -1767,7 +1959,8 @@
             const [showLegend, setShowLegend] = useState(true);
             const [showSiteLabels, setShowSiteLabels] = useState(false);
 
-            const [colorAssignmentMode, setColorAssignmentMode] = useState('random'); // 'random' or 'manual'
+            const [colorAssignmentMode, setColorAssignmentMode] = useState('manual'); // always manual now
+
             const [manualCategoryStyles, setManualCategoryStyles] = useState({}); // { 'CatName': { color, iconUrl, size, opacity } }
 
             const fileInputRef = useRef(null);
@@ -1805,8 +1998,9 @@
 
             const processData = (parsedData) => {
                 if (parsedData.length === 0) return;
-                const cols = Object.keys(parsedData[0]);
+                const cols = Object.keys(parsedData[0]).filter(c => c !== '#');
                 setColumns(cols);
+
                 setData(parsedData);
 
                 const guessLat = cols.find(c => /lat|latitude|coord/i.test(c)) || '';
@@ -1817,6 +2011,7 @@
                 setCategoryCol('');
                 setFilterCol('');
                 setFilterVals([]);
+
             };
 
             const resetApp = () => {
@@ -1923,17 +2118,20 @@
                             }
 
                             const kmlColor = hexToKml(color, markerOpacity);
-                            const iconScale = markerSize * 0.4;
+                            const iconScale = markerSize;
 
                             if (val && !styles[val]) {
                                 let finalIconUrl = iconUrl;
-                                if (finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl) {
+                                const isVector = finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl;
+                                if (isVector) {
                                     finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
                                 }
+                                // Only tint color for vector circles; real icons keep their natural color
+                                const styleColor = isVector ? kmlColor : hexToKml('#ffffff', markerOpacity);
                                 styles[val] = `
   <Style id="cat_${val.replace(/[^a-z0-9]/gi, '_')}">
     <IconStyle>
-      <color>${kmlColor}</color>
+      <color>${styleColor}</color>
       <scale>${iconScale}</scale>
       <Icon>
         <href>${finalIconUrl}</href>
@@ -1943,7 +2141,7 @@
       <scale>0.7</scale>
     </LabelStyle>
     <BalloonStyle>
-      <text><![CDATA[<div style="font-family:Arial,sans-serif;font-size:13px;"><b style="font-size:15px;">$[name]</b><br/><br/>$[description]</div>]]></text>
+      <text><![CDATA[$[description]]]></text>
     </BalloonStyle>
   </Style>`;
                             }
@@ -1951,15 +2149,17 @@
                     });
                 } else {
                     const kmlColor = hexToKml(singleColor, markerOpacity);
-                    const iconScale = markerSize * 0.4;
+                    const iconScale = markerSize;
                     let finalIconUrl = markerIconUrl;
-                    if (finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl) {
+                    const isVector = finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl;
+                    if (isVector) {
                         finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
                     }
+                    const styleColor = isVector ? kmlColor : hexToKml('#ffffff', markerOpacity);
                     styles['default'] = `
   <Style id="style_default">
     <IconStyle>
-      <color>${kmlColor}</color>
+      <color>${styleColor}</color>
       <scale>${iconScale}</scale>
       <Icon>
         <href>${finalIconUrl}</href>
@@ -1969,7 +2169,7 @@
       <scale>0.7</scale>
     </LabelStyle>
     <BalloonStyle>
-      <text><![CDATA[<div style="font-family:Arial,sans-serif;font-size:13px;"><b style="font-size:15px;">$[name]</b><br/><br/>$[description]</div>]]></text>
+      <text><![CDATA[$[description]]]></text>
     </BalloonStyle>
   </Style>`;
                 }
@@ -1986,16 +2186,18 @@
                     const lng = parseFloat(row[mapping.lng]);
                     if (isNaN(lat) || isNaN(lng)) return;
 
+                    const siteName = (mapping.siteName && row[mapping.siteName]) ? String(row[mapping.siteName]) : `Point ${i + 1}`;
+
                     let desc = '';
                     if (popupColumns.length > 0) {
-                        desc = '<![CDATA[<div style="font-family:Arial,sans-serif;font-size:12px;">';
+                        desc = `<![CDATA[<div style="font-size:13px;"><b>${siteName}</b><hr style="margin:4px 0;">` ;
                         popupColumns.forEach(k => {
-                            desc += `<div style="padding:3px 0;"><span style="color:#475569;">${k}</span>&nbsp;&nbsp;<span>${row[k] ?? ''}</span></div>`;
+                            desc += `<div><b>${k}:</b> ${row[k] ?? ''}</div>`;
                         });
                         desc += '</div>]]>';
                     }
 
-                    const name = (mapping.siteName && row[mapping.siteName]) ? String(row[mapping.siteName]) : `Point ${i + 1}`;
+                    const name = siteName;
 
                     let styleId = 'style_default';
                     if (colorMode === 'category' && categoryCol && row[categoryCol] !== undefined) {
@@ -2071,20 +2273,18 @@
                                             <div style={{ transform: isUploadOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.2s' }}><Icons.Chevron /></div>
                                         </div>
                                         <div style={{ display: isUploadOpen ? 'block' : 'none', padding: '0 16px 16px 16px' }}>
-                                            {!file ? (
-                                                <label className="dropzone">
-                                                    <input type="file" accept=".csv,.xlsx,.txt" ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
-                                                    <Icons.CloudUpload />
-                                                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a', textAlign: 'center' }}>Drag & Drop or <span style={{ textDecoration: 'underline' }}>Browse</span></div>
-                                                    <div style={{ fontSize: '10px', color: '#94a3b8', textAlign: 'center' }}>CSV · TXT · XLS · XLSX</div>
-                                                </label>
-                                            ) : (
-                                                <div style={{ padding: '12px', background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '6px' }}>
-                                                    <div style={{ fontWeight: 600, color: '#0f172a', marginBottom: '4px' }}>{file.name}</div>
-                                                    <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600 }}>✓ {data.length} records loaded</div>
-                                                    <button className="btn btn-danger" onClick={resetApp} style={{ marginTop: '12px' }}><Icons.Trash /> Reset</button>
+                                            <label className="dropzone">
+                                                <input type="file" accept=".csv,.xlsx,.txt" ref={fileInputRef} onChange={handleFileUpload} style={{ display: 'none' }} />
+                                                <Icons.CloudUpload />
+                                                <div style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a', textAlign: 'center' }}>Drag & Drop or <span style={{ textDecoration: 'underline' }}>Browse</span></div>
+                                                <div style={{ fontSize: '10px', color: '#94a3b8', textAlign: 'center' }}>CSV · TXT · XLS · XLSX</div>
+                                            </label>
+                                            {data.length > 0 && (
+                                                <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '12px', color: '#10b981', fontWeight: 600 }}>
+                                                    ✓ {data.length} records loaded
                                                 </div>
                                             )}
+
                                         </div>
                                     </div>
                                 </div>
@@ -2113,12 +2313,13 @@
                                                 <button type="button" onClick={() => setMapping({ ...mapping, popupCols: [] })} style={{ fontSize: '11px', color: '#64748b', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, padding: 0 }}>Clear</button>
                                             </div>
                                             <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '8px', marginBottom: '16px' }}>
-                                                {columns.map(h => (
+                                                {columns.filter(h => h !== '#').map(h => (
                                                     <label key={h} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', cursor: 'pointer' }}>
                                                         <input type="checkbox" style={{ cursor: 'pointer', accentColor: '#334155' }} checked={mapping.popupCols.includes(h)} onChange={e => { const newCols = e.target.checked ? [...mapping.popupCols, h] : mapping.popupCols.filter(c => c !== h); setMapping({ ...mapping, popupCols: newCols }); }} />
                                                         <span style={{ fontSize: '11px', color: '#334155' }}>{h}</span>
                                                     </label>
                                                 ))}
+
                                             </div>
                                         </div>
                                     </div>
@@ -2165,10 +2366,6 @@
                                                         <div style={{ marginBottom: '12px', padding: '10px', background: '#f1f5f9', borderRadius: '6px' }}>
                                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
                                                                 <span style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Manual Color & Icon</span>
-                                                                <label className="toggle-switch">
-                                                                    <input type="checkbox" checked={colorAssignmentMode === 'manual'} onChange={e => setColorAssignmentMode(e.target.checked ? 'manual' : 'random')} />
-                                                                    <span className="toggle-slider"></span>
-                                                                </label>
                                                             </div>
                                                             <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                                                                 {uniqueCategoryVals.map((val, i) => {
@@ -2189,11 +2386,11 @@
                                             )}
 
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px' }}>
-                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Marker Size</div>
-                                                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{markerSize}px</div>
+                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Global Icon Scale</div>
+                                                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{Number(markerSize).toFixed(1)}x</div>
                                             </div>
                                             <div style={{ marginTop: '4px' }}>
-                                                <input type="range" min="2" max="30" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerSize} onChange={e => setMarkerSize(parseInt(e.target.value))} />
+                                                <input type="range" min="0.5" max="3.0" step="0.1" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerSize} onChange={e => setMarkerSize(parseFloat(e.target.value))} />
                                             </div>
 
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px' }}>
@@ -2238,7 +2435,7 @@
                                             <div style={{ position: 'relative', marginBottom: '16px' }}>
                                                 <input type="text" placeholder="Search site..." className="form-control" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} style={{ backgroundColor: '#f8fafc', color: '#0f172a', border: '1px solid #e2e8f0', width: '100%', height: '38px', fontSize: '12px', padding: '0 36px 0 12px', borderRadius: '6px' }} />
                                                 <div style={{ position: 'absolute', right: '12px', top: '11px', color: '#94a3b8' }}>
-                                                    <Icons.Filter />
+                                                    <Icons.Search />
                                                 </div>
                                             </div>
 
