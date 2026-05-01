@@ -12,6 +12,10 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+    <!-- Leaflet MarkerCluster CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+
     <!-- React 18 -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -21,6 +25,7 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
     <!-- PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -32,11 +37,8 @@
         :root {
             --bg: #ffffff;
             --text: #0f172a;
-            /* slate-900 */
             --border: #e2e8f0;
-            /* slate-200 */
             --accent: #2563eb;
-            /* blue-600 */
             --sidebar-width: 420px;
         }
 
@@ -96,7 +98,6 @@
             top: 0;
             bottom: 0;
             background: #f8fafc;
-            /* slate-50 */
             display: flex;
             flex-direction: column;
             transition: left 0.3s ease;
@@ -181,7 +182,6 @@
             letter-spacing: 0.05em;
             margin-bottom: 24px;
             color: #64748b;
-            /* slate-500 */
         }
 
         .panel {
@@ -203,15 +203,10 @@
             gap: 8px;
         }
 
-        .dropzone:hover {
-            background: #f8fafc;
-            border-color: var(--accent);
-        }
-
         .dropzone:hover,
         .dropzone.dragging {
             background: #f1f5f9;
-            /* slate-100 */
+            border-color: var(--accent);
         }
 
         .form-group {
@@ -223,7 +218,6 @@
             font-size: 12px;
             margin-bottom: 20px;
             color: #475569;
-            /* slate-600 */
             font-weight: 500;
             line-height: 1.6;
             letter-spacing: 0.02em;
@@ -305,9 +299,36 @@
             transform: translateX(16px);
         }
 
+        /* Pill Mode Selector CSS */
+        .mode-selector {
+            display: flex;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: 7px;
+            margin-bottom: 16px;
+            gap: 2px;
+        }
+
+        .mode-option {
+            flex: 1;
+            padding: 6px 4px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.18s;
+            color: #64748b;
+        }
+
+        .mode-option.active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
         .btn {
             background: #0f172a;
-            /* slate-900 */
             color: white;
             border: none;
             padding: 8px 16px;
@@ -326,7 +347,6 @@
 
         .btn:hover:not(:disabled) {
             background: #1e293b;
-            /* slate-800 */
         }
 
         .btn-outline {
@@ -337,56 +357,22 @@
 
         .btn-outline:hover:not(:disabled) {
             background: #f8fafc;
-            /* slate-50 */
-        }
-
-        .btn-sm {
-            font-size: 11px;
-            padding: 6px 10px;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 480px) {
-            .tab-btn { gap: 3px; }
-            .tab-btn span { font-size: 10px; }
-        }
-
-        @media (max-width: 500px) {
-            .modal-footer {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .modal-footer > div {
-                width: 100%;
-                justify-content: stretch;
-            }
-            .modal-footer .btn {
-                flex: 1;
-                min-width: 0;
-            }
         }
 
         .btn-danger {
             background: #fef2f2;
-            /* red-50 */
             color: #ef4444;
-            /* red-500 */
             border: 1px solid #fecaca;
-            /* red-200 */
         }
 
         .btn-danger:hover:not(:disabled) {
             background: #fee2e2;
-            /* red-100 */
             color: #dc2626;
-            /* red-600 */
         }
 
         .btn:disabled {
             background: #e2e8f0;
-            /* slate-200 */
             color: #94a3b8;
-            /* slate-400 */
             cursor: not-allowed;
             border-color: #e2e8f0;
         }
@@ -403,14 +389,6 @@
             z-index: 3000;
         }
 
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-        }
-
         .toggle-btn {
             background: transparent;
             border: none;
@@ -424,7 +402,6 @@
 
         .toggle-btn:hover {
             background: #f1f5f9;
-            /* slate-100 */
         }
 
         /* Map styling */
@@ -436,17 +413,14 @@
 
         .leaflet-container {
             background: #f8fafc;
-            /* slate-50 */
             font-family: inherit;
         }
 
-        /* Override Leaflet SVG Div Icons styling */
         .custom-shape-icon {
             background: transparent !important;
             border: none !important;
         }
 
-        /* Popup styling */
         .leaflet-popup-content-wrapper {
             border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -478,7 +452,7 @@
             display: none !important;
         }
 
-        /* Legend floating UI */
+        /* Legend floating UI - REMOVED MAX HEIGHT AND OVERFLOW */
         .map-legend {
             position: absolute;
             bottom: 24px;
@@ -491,12 +465,9 @@
             z-index: 1000;
             min-width: 180px;
             max-width: 280px;
-            max-height: 400px;
-            overflow-y: auto;
             backdrop-filter: blur(4px);
         }
 
-        /* Map Controls */
         .map-controls-group {
             position: absolute;
             bottom: 24px;
@@ -538,7 +509,6 @@
             box-shadow: none !important;
         }
 
-        /* Google Earth-style Layer Switcher */
         .layer-switcher {
             position: absolute;
             top: 16px;
@@ -573,7 +543,6 @@
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(15, 23, 42, 0.2);
-            /* slate-900 20% */
             padding: 8px;
             display: flex;
             gap: 8px;
@@ -583,15 +552,8 @@
         }
 
         @keyframes layerFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .layer-tile {
@@ -605,12 +567,10 @@
 
         .layer-tile:hover {
             background: #f1f5f9;
-            /* slate-100 */
         }
 
         .layer-tile.active {
             background: #eff6ff;
-            /* blue-50 */
         }
 
         .layer-tile-img {
@@ -638,7 +598,6 @@
             font-size: 10px;
             font-weight: 600;
             color: #475569;
-            /* slate-600 */
             margin-top: 4px;
             line-height: 1.2;
             white-space: nowrap;
@@ -675,624 +634,221 @@
             text-overflow: ellipsis;
             margin-right: 12px;
             color: #475569;
-            /* slate-600 */
         }
 
         .legend-count {
             font-weight: 600;
             color: var(--text);
             background: #f1f5f9;
-            /* slate-100 */
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 11px;
         }
 
-        /* Thin Scrollbars */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #e2e8f0;
-            /* slate-200 */
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #cbd5e1;
-            /* slate-300 */
-        }
-
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-bottom: 32px;
-            margin-top: 12px;
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 12px;
-            cursor: pointer;
-            line-height: 1.8;
-        }
-
-        .radio-label input {
-            accent-color: var(--accent);
-        }
-
-        /* Multi Select */
-        .multi-select {
-            position: relative;
-        }
-
-        .multi-select-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .multi-select-popover {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-top: 4px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 10000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 8px 0;
-        }
-
-        .multi-select-item {
-            padding: 6px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .multi-select-item:hover {
-            background: #f8fafc;
-            /* slate-50 */
-        }
-
-        .multi-select-item input {
-            cursor: pointer;
-            accent-color: var(--accent);
-        }
-
-
-
-        /* ── Responsive ──────────────────────── */
-        @media (max-width: 768px) {
-            :root { --sidebar-width: 100%; }
-
-            .sidebar {
-                width: 100%;
-                z-index: 3000;
-            }
-
-            .main-content {
-                left: 0 !important;
-            }
-
-            .panel { padding: 12px; }
-
-            .map-legend {
-                bottom: 12px;
-                right: 12px;
-                left: 12px;
-                max-width: none;
-                width: auto;
-                max-height: 150px;
-            }
-
-            .layer-switcher {
-                top: 12px;
-                right: 12px;
-            }
-
-            .sidebar-close-btn {
-                display: flex !important;
-            }
-        }
-
-
-        /* ── Icon Picker Mobile ──────────────── */
-        @media (max-width: 560px) {
-            /* Keep modal as centered floating card, not full-screen */
-            .modal-container {
-                width: 95vw !important;
-                max-width: 95vw !important;
-                max-height: 88vh !important;
-                height: auto;
-                border-radius: 6px;
-            }
-
-            .modal-overlay {
-                align-items: center;
-                padding: 0;
-            }
-
-            /* Side-by-side: preview LEFT, controls stacked RIGHT */
-            .picker-top-controls {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 10px;
-                padding: 10px;
-            }
-
-            .picker-preview-box {
-                width: 80px;
-                height: 80px;
-                flex-shrink: 0;
-            }
-
-            .picker-preview-box img {
-                max-width: 64px;
-                max-height: 64px;
-            }
-
-            /* Stack Scale / Opacity / Color vertically */
-            .picker-controls-col {
-                flex: 1;
-                gap: 4px;
-            }
-
-            .picker-controls-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-
-            .picker-controls-row label {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-
-            .picker-controls-row input[type="number"] {
-                width: 52px;
-            }
-
-            /* 6-column grid on mobile */
-            .icon-grid-all {
-                grid-template-columns: repeat(6, 1fr);
-                max-height: calc(88vh - 220px);
-                padding: 4px;
-            }
-
-            .icon-item-small {
-                width: 100%;
-                height: 42px;
-            }
-
-            .icon-item-small img {
-                max-width: 30px;
-                max-height: 30px;
-            }
-
-            /* Footer: two rows */
-            .modal-footer {
-                flex-direction: column;
-                gap: 6px;
-                padding: 8px 10px;
-                align-items: stretch;
-            }
-
-            .modal-footer > div {
-                width: 100%;
-                display: flex;
-                gap: 6px;
-            }
-
-            .modal-footer .btn,
-            .modal-footer .btn-outline {
-                flex: 1;
-                min-width: 0;
-                width: auto;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .icon-grid-all { grid-template-columns: repeat(5, 1fr); }
-            .tab-btn { gap: 2px; }
-            .tab-btn span { font-size: 9px; }
-        }
-
-        .sidebar-close-btn {
-            display: none;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-            color: var(--text);
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-        }
-
-        .sidebar-close-btn:hover {
-            background: #f1f5f9;
-        }
-
-        /* Modal Header Red styling */
-        .modal-header.red {
-            background: #d32f2f;
-            color: white;
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header.red span {
-            font-weight: 600;
-        }
-
-        /* ── Icon Picker ───────────────────────── */
-        .picker-top-controls {
-            padding: 10px 12px 8px;
-            background: #f1f1f1;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            font-size: 13px;
-        }
-
-        .picker-preview-box {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border: 2px solid #aaa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border-radius: 2px;
-        }
-
-        .picker-preview-box img {
-            max-width: 72px;
-            max-height: 72px;
-            object-fit: contain;
-        }
-
-        .picker-controls-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            justify-content: center;
-            padding-top: 4px;
-        }
-
-        .picker-controls-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .picker-controls-row label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            color: #222;
-            white-space: nowrap;
-        }
-
-        .picker-controls-row input[type="number"] {
-            width: 48px;
-            padding: 2px 4px;
-            border: 1px solid #aaa;
-            font-size: 12px;
-            background: #fff;
-        }
-
-        .picker-controls-row select {
-            padding: 2px 4px;
-            border: 1px solid #aaa;
-            font-size: 12px;
-            background: #fff;
-        }
-
-        .picker-url-input {
-            width: 100%;
-            padding: 3px 6px;
-            border: 1px solid #aaa;
-            font-family: monospace;
-            font-size: 11px;
-            background: white;
-            color: #333;
-            box-sizing: border-box;
-        }
-
-        /* Icon Grid */
-        .icon-grid-all {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
-            gap: 0;
-            background: #fff;
-            padding: 6px;
-            border: 1px solid #aaa;
-            max-height: 340px;
-            overflow-y: auto;
-        }
-
-        .icon-item-small {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-sizing: border-box;
-            background: #fff;
-            transition: background 0.1s;
-        }
-
-        .icon-item-small:hover {
-            background: #dde8ff;
-        }
-
-        .icon-item-small.selected {
-            border: 2px solid #000;
-            background: #fff;
-        }
-
-        .icon-item-small img {
-            max-width: 36px;
-            max-height: 36px;
-            object-fit: contain;
-            display: block;
-        }
-
-        .vector-circle-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 1.5px solid white;
-            box-shadow: 0 0 0 1.5px #666;
-        }
-
-        .modal-overlay {
+        .icon-modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            backdrop-filter: blur(2px);
+            padding: 16px;
         }
 
-        .modal-container {
-            background: #f3f3f3;
-            width: 700px;
-            max-width: 95vw;
-            max-height: 90vh;
+        .icon-modal-card {
+            background: #f8fafc;
+            width: 100%;
+            max-width: 680px; 
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid #c0c0c0;
+            font-family: 'Inter', sans-serif;
         }
 
-        .modal-header {
-            background: #d84545;
-            /* GE Red */
+        .icon-modal-header {
+            background: #ef4444;
             color: white;
-            padding: 10px 16px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: 600;
         }
 
-        .modal-body {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            background: #e0e0e0;
+        .icon-modal-header h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
         }
 
-        .icon-preview-pane {
-            background: #f0f0f0;
-            border: 1px solid #b0b0b0;
-            padding: 12px;
-            margin-bottom: 16px;
+        .icon-modal-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
             display: flex;
-            gap: 20px;
             align-items: center;
+            justify-content: center;
         }
 
-        .preview-box {
+        .icon-modal-body {
+            padding: 16px;
+            background: #f8fafc;
+        }
+
+        .icon-modal-top {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .icon-modal-preview {
             width: 80px;
             height: 80px;
             background: white;
-            border: 1px solid #ccc;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .preview-box img {
-            max-width: 64px;
-            max-height: 64px;
-        }
-
-        .preview-details {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .icon-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
-            gap: 8px;
-            background: white;
-            padding: 12px;
-            border: 1px solid #b0b0b0;
-        }
-
-        .icon-item {
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 1px solid transparent;
-            padding: 4px;
-            transition: all 0.1s;
-        }
-
-        .icon-item:hover {
-            background: #e1f5fe;
-            border-color: #03a9f4;
-        }
-
-        .icon-item.selected {
-            background: #fff;
-            border: 1.5px solid #000;
-        }
-
-        .icon-item img {
-            max-width: 100%;
-            max-height: 100%;
+        .icon-modal-preview img {
+            max-width: 60px;
+            max-height: 60px;
             object-fit: contain;
         }
 
-        .modal-footer {
-            padding: 12px 16px;
-            border-top: 1px solid #ccc;
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            background: #f3f3f3;
-            flex-wrap: wrap;
-        }
-        @media (max-width: 500px) {
-            .modal-footer {
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px;
-            }
-            .modal-footer > div {
-                width: 100%;
-                justify-content: center;
-            }
-            .modal-footer .btn {
-                flex: 1;
-                min-width: 0;
-                font-size: 12px;
-                padding: 8px 4px;
-            }
-        }
-
-        .marker-preview-card {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px;
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .marker-preview-card:hover {
-            border-color: var(--accent);
-        }
-
-        .marker-preview-img {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-radius: 2px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .marker-preview-img img {
-            max-width: 32px;
-            max-height: 32px;
-        }
-
-        .marker-preview-info {
+        .icon-modal-controls {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .marker-preview-name {
-            font-weight: 600;
-            font-size: 11px;
-            color: #1e293b;
+        .icon-modal-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .marker-preview-sub {
-            font-size: 10px;
+        .icon-modal-label {
+            font-size: 12px;
+            font-weight: 500;
             color: #64748b;
         }
 
-        .category-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
+        .icon-modal-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            color: #0f172a;
+            width: 50px;
         }
 
-        .category-tab {
-            padding: 4px 10px;
-            font-size: 11px;
-            background: #e0e0e0;
-            border: 1px solid #ccc;
-            border-bottom: none;
-            border-radius: 4px 4px 0 0;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .category-tab.active {
+        .icon-modal-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            color: #0f172a;
             background: white;
-            border-color: #b0b0b0;
+        }
+
+        .icon-modal-name-input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-size: 11px;
+            font-family: inherit;
+            color: #334155;
+            background: white;
+        }
+
+        .icon-modal-grid-wrap {
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 8px;
+            height: 320px; 
+            overflow-y: auto;
+        }
+
+        .icon-modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 2px;
+        }
+
+        .icon-modal-item {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 2px solid transparent;
+        }
+
+        .icon-modal-item:hover { background: #f1f5f9; }
+        .icon-modal-item.selected { border-color: #0f172a; background: white; }
+
+        .icon-modal-item img {
+            max-width: 28px;
+            max-height: 28px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .icon-modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .icon-modal-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn-cancel { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .icon-btn-cancel:hover { background: #f8fafc; }
+        .icon-btn-ok { background: #2563eb; border: 1px solid #2563eb; color: white; }
+        .icon-btn-ok:hover { background: #1d4ed8; }
+
+        @media (max-width: 768px) {
+            :root { --sidebar-width: 100%; }
+            .sidebar { width: 100%; z-index: 3000; }
+            .main-content { left: 0 !important; }
+            .panel { padding: 12px; }
+            .map-legend { bottom: 12px; right: 12px; left: 12px; max-width: none; width: auto; max-height: none; } /* Mobile fix */
+            .layer-switcher { top: 12px; right: 12px; }
+            .icon-modal-card { max-width: 95vw; }
+            .icon-modal-grid-wrap { height: 240px; }
         }
     </style>
 </head>
@@ -1308,22 +864,33 @@
             Upload: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>,
             Export: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
             Menu: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>,
-            Trash: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>,
             Chevron: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>,
             X: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>,
-            User: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
-            Settings: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.81-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
             CloudUpload: () => <svg width="28" height="28" viewBox="0 0 24 24" fill="#94a3b8"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path></svg>,
             Columns: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line></svg>,
             Style: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>,
             Filter: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>,
             Search: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
-            Maximize: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+            Maximize: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>,
+            Legend: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
         };
 
         const PALETTE = ['#2563eb', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#14b8a6', '#84cc16', '#a855f7', '#f43f5e', '#6366f1'];
 
-        const GE_ICON_BASE = 'https://maps.google.com/mapfiles/kml';
+        const GE_ICON_BASE = 'https://www.google.com/mapfiles/kml';
+        
+        // Define default mapping paddles for categorized modes
+        const DEFAULT_GE_PADDLES = [
+            'https://www.google.com/mapfiles/kml/paddle/blu-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/red-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/grn-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/ylw-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/purple-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/pink-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/ltblu-blank.png',
+            'https://www.google.com/mapfiles/kml/paddle/wht-blank.png'
+        ];
+
         const GE_ICONS = {
             'Pushpins': [
                 'pushpin/ylw-pushpin.png', 'pushpin/blue-pushpin.png', 'pushpin/grn-pushpin.png',
@@ -1331,7 +898,7 @@
                 'pushpin/red-pushpin.png', 'pushpin/wht-pushpin.png'
             ],
             'Paddles (Blank)': [
-                'paddle/blu-blank.png', 'paddle/grn-blank.png', 'paddle/ltblu-blank.png',
+                'paddle/blu-blank.png', 'paddle/grn-blank.png', 'paddle/ltblu-pushpin.png',
                 'paddle/pink-blank.png', 'paddle/purple-blank.png', 'paddle/red-blank.png',
                 'paddle/wht-blank.png', 'paddle/ylw-blank.png',
                 'paddle/blu-circle.png', 'paddle/grn-circle.png', 'paddle/ltblu-circle.png',
@@ -1362,6 +929,12 @@
             'Palette 5': [...Array(64)].map((_, i) => `pal5/icon${i}.png`)
         };
 
+        const getIconUrl = (url) => {
+            if (!url || url === 'VECTOR_CIRCLE') return null;
+            if (url.startsWith('http')) return url;
+            return GE_ICON_BASE + '/' + url;
+        };
+
         const createCustomIcon = (iconUrl, color, scale, opacity) => {
             const s = Math.round(24 * scale);
             const op = opacity / 100;
@@ -1376,9 +949,20 @@
                 });
             }
 
-            const safeUrl = iconUrl && typeof iconUrl === 'string' ? iconUrl : '';
-            const html = `<div style="width: ${s}px; height: ${s}px; display: flex; align-items: center; justify-content: center; opacity: ${op};">
-                            <img src="${safeUrl}" style="width: 100%; height: 100%; object-fit: contain; display: block;" onerror="this.style.display='none'; this.parentElement.style.background='${color}'; this.parentElement.style.borderRadius='50%';" />
+            const fullUrl = getIconUrl(iconUrl);
+            if (!fullUrl) {
+                return L.divIcon({
+                    className: 'custom-shape-icon',
+                    html: `<div style="width: ${s}px; height: ${s}px; background: ${color}; border-radius: 50%; opacity: ${op}; border: 1px solid #fff;"></div>`,
+                    iconSize: [s, s],
+                    iconAnchor: [s / 2, s / 2],
+                    popupAnchor: [0, -s / 2]
+                });
+            }
+
+            const html = `<div style="width: ${s}px; height: ${s}px; display: flex; align-items: center; justify-content: center; opacity: ${op}; position: relative;">
+                            <img src="${fullUrl}" style="width: ${s}px; height: ${s}px; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.querySelector('.fallback-circle').style.display='flex';" />
+                            <div class="fallback-circle" style="display: none; position: absolute; width: ${s * 0.8}px; height: ${s * 0.8}px; background: ${color}; border-radius: 50%; border: 2px solid #fff;"></div>
                           </div>`;
             return L.divIcon({
                 className: 'custom-shape-icon',
@@ -1408,7 +992,6 @@
                 light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
                 dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
                 satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                dtm: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
                 osm: 'https://tile.openstreetmap.de/{z}/{x}/{y}.png'
             };
 
@@ -1416,7 +999,6 @@
                 light: { subdomains: 'abcd', maxZoom: 19, attribution: '' },
                 dark: { subdomains: 'abcd', maxZoom: 19, attribution: '' },
                 satellite: { maxZoom: 19, attribution: '' },
-                dtm: { maxZoom: 19, attribution: '' },
                 osm: { maxZoom: 19, attribution: '' }
             };
 
@@ -1428,6 +1010,7 @@
                         ...layerOpts,
                         errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMj56IiBoZWlnaHQ9IjI2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg=='
                     }).addTo(mapInst.current);
+                    
                     layerGroupRef.current = L.layerGroup().addTo(mapInst.current);
                 }
                 return () => {
@@ -1439,7 +1022,6 @@
                 };
             }, []);
 
-            // Fix map size when sidebar opens/closes
             useEffect(() => {
                 const timer = setTimeout(() => {
                     if (mapInst.current) mapInst.current.invalidateSize();
@@ -1459,6 +1041,7 @@
                 if (!mapInst.current) return;
 
                 layerGroupRef.current.clearLayers();
+                
                 if (!data.length || !mapping.lat || !mapping.lng) {
                     setLegendStats({ total: 0, items: [] });
                     return;
@@ -1467,6 +1050,7 @@
                 const bounds = [];
                 const catCounts = {};
                 const catColorsMap = {};
+                const catIconsMap = {};
                 let catIdx = 0;
                 let totalPlotted = 0;
 
@@ -1480,81 +1064,52 @@
 
                     let color = singleColor;
                     let iconUrl = markerIconUrl;
+                    
                     if (colorMode === 'category' && categoryCol && row[categoryCol] !== undefined) {
                         const val = String(row[categoryCol]);
-                        if (colorAssignmentMode === 'manual' && manualCategoryStyles[val]) {
-                            color = manualCategoryStyles[val].color;
-                            iconUrl = manualCategoryStyles[val].iconUrl || markerIconUrl;
-                        } else {
-                            if (!catColorsMap[val]) {
-                                catColorsMap[val] = PALETTE[catIdx % PALETTE.length];
-                                catIdx++;
-                            }
-                            color = catColorsMap[val];
+                        
+                        if (!catColorsMap[val]) {
+                            catColorsMap[val] = PALETTE[catIdx % PALETTE.length];
+                            catIconsMap[val] = DEFAULT_GE_PADDLES[catIdx % DEFAULT_GE_PADDLES.length];
+                            catIdx++;
                         }
+
+                        if (colorAssignmentMode === 'manual' && manualCategoryStyles && manualCategoryStyles[val]) {
+                            color = manualCategoryStyles[val].color;
+                            iconUrl = manualCategoryStyles[val].iconUrl || catIconsMap[val];
+                        } else {
+                            color = catColorsMap[val];
+                            iconUrl = catIconsMap[val];
+                        }
+                        
                         catCounts[val] = (catCounts[val] || 0) + 1;
                     }
 
-                    if (iconUrl === 'VECTOR_CIRCLE') {
-                        const marker = L.circleMarker([lat, lng], {
-                            radius: Math.round(8 * markerSize),
-                            fillColor: color,
-                            color: '#ffffff',
-                            weight: 1.5,
-                            fillOpacity: markerOpacity / 100,
-                            opacity: 1
+                    const marker = L.marker([lat, lng], {
+                        icon: createCustomIcon(iconUrl, color, markerSize, markerOpacity)
+                    });
+
+                    let popupHTML = `<div style="font-size: 13px;">${(mapping.siteName && row[mapping.siteName]) || ''}<hr style="margin: 4px 0;">`;
+
+                    if (mapping.popupCols && mapping.popupCols.length > 0) {
+                        mapping.popupCols.forEach(col => {
+                            popupHTML += `<div><b>${col}:</b> ${row[col] ?? ''}</div>`;
                         });
-
-                        let popupHTML = `<div style="font-size: 13px;">${(mapping.siteName && row[mapping.siteName]) || ''}<hr style="margin: 4px 0;">`;
-
-                        if (mapping.popupCols && mapping.popupCols.length > 0) {
-                            mapping.popupCols.forEach(col => {
-                                popupHTML += `<div><b>${col}:</b> ${row[col] ?? ''}</div>`;
-                            });
-                        }
-
-                        popupHTML += `</div>`;
-                        marker.bindPopup(popupHTML);
-
-                        if (showSiteLabels && mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
-                            marker.bindTooltip(row[mapping.siteName], {
-                                permanent: true,
-                                direction: 'top',
-                                className: 'site-label-tooltip',
-                                offset: [0, -(24 * markerSize)]
-                            });
-                        }
-
-                        layerGroupRef.current.addLayer(marker);
-                    } else {
-                        const marker = L.marker([lat, lng], {
-                            icon: createCustomIcon(iconUrl, color, markerSize, markerOpacity)
-                        });
-
-                        // Build Popup
-                        let popupHTML = `<div style="font-size: 13px;">${(mapping.siteName && row[mapping.siteName]) || ''}<hr style="margin: 4px 0;">`;
-
-                        if (mapping.popupCols && mapping.popupCols.length > 0) {
-                            mapping.popupCols.forEach(col => {
-                                popupHTML += `<div><b>${col}:</b> ${row[col] ?? ''}</div>`;
-                            });
-                        }
-
-                        popupHTML += `</div>`;
-                        marker.bindPopup(popupHTML);
-
-
-                        if (showSiteLabels && mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
-                            marker.bindTooltip(row[mapping.siteName], {
-                                permanent: true,
-                                direction: 'top',
-                                className: 'site-label-tooltip',
-                                offset: [0, -(24 * markerSize)]
-                            });
-                        }
-
-                        layerGroupRef.current.addLayer(marker);
                     }
+
+                    popupHTML += `</div>`;
+                    marker.bindPopup(popupHTML);
+
+                    if (showSiteLabels && mapping.siteName && row[mapping.siteName] !== undefined && row[mapping.siteName] !== '') {
+                        marker.bindTooltip(row[mapping.siteName], {
+                            permanent: true,
+                            direction: 'top',
+                            className: 'site-label-tooltip',
+                            offset: [0, -(24 * markerSize)]
+                        });
+                    }
+
+                    layerGroupRef.current.addLayer(marker);
                 });
 
                 if (bounds.length > 0) {
@@ -1562,14 +1117,13 @@
                     boundsRef.current = bounds;
                 }
 
-                // Compile legend stats
                 if (colorMode === 'category' && categoryCol) {
                     const sortedItems = Object.keys(catCounts).map(cat => {
-                        const manStyle = manualCategoryStyles[cat];
+                        const manStyle = manualCategoryStyles && manualCategoryStyles[cat];
                         return {
                             label: cat,
-                            color: (colorAssignmentMode === 'manual' && manStyle) ? manStyle.color : catColorsMap[cat],
-                            iconUrl: (colorAssignmentMode === 'manual' && manStyle) ? manStyle.iconUrl : null,
+                            color: (colorAssignmentMode === 'manual' && manStyle && manStyle.color) ? manStyle.color : catColorsMap[cat],
+                            iconUrl: (colorAssignmentMode === 'manual' && manStyle && manStyle.iconUrl) ? manStyle.iconUrl : catIconsMap[cat],
                             count: catCounts[cat]
                         };
                     }).sort((a, b) => b.count - a.count);
@@ -1585,7 +1139,6 @@
                 <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                     <div ref={mapRef} id="map"></div>
 
-                    {/* Floating Legend */}
                     {showLegend && legendStats.total > 0 && (
                         <div className="map-legend" style={{ left: '24px', right: 'auto' }}>
                             <div style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#64748b', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px', marginBottom: '8px' }}>
@@ -1593,12 +1146,12 @@
                             </div>
 
                             {legendStats.items.length > 0 ? (
-                                <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                                <div>
                                     {legendStats.items.map((item, idx) => (
                                         <div key={idx} className="legend-row">
                                             <div style={{ display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
                                                 {item.iconUrl && item.iconUrl !== 'VECTOR_CIRCLE' ? (
-                                                    <img src={item.iconUrl} alt="" style={{ width: '14px', height: '14px', objectFit: 'contain', marginRight: '8px', flexShrink: 0 }} onError={e => { e.target.style.display='none'; }} />
+                                                    <img src={getIconUrl(item.iconUrl)} alt="" style={{ width: '14px', height: '14px', objectFit: 'contain', marginRight: '8px', flexShrink: 0 }} onError={e => { e.target.style.display='none'; }} />
                                                 ) : (
                                                     <span className="legend-color-box" style={{ background: item.color }}></span>
                                                 )}
@@ -1620,59 +1173,15 @@
                         </div>
                     )}
 
-                    {/* Map Controls */}
                     <div className="map-controls-group">
                         <div className="leaflet-control-zoom leaflet-bar leaflet-control">
-                            <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" onClick={(e) => { e.preventDefault(); mapInst.current.zoomIn(); }}>+</a>
-                            <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" onClick={(e) => { e.preventDefault(); mapInst.current.zoomOut(); }}>-</a>
+                            <a className="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" onClick={(e) => { e.preventDefault(); mapInst.current.zoomIn(); }}>+</a>
+                            <a className="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" onClick={(e) => { e.preventDefault(); mapInst.current.zoomOut(); }}>-</a>
                         </div>
                         <button className="map-control-btn" onClick={centerOnData} title="Center on Data">
                             <Icons.Maximize />
                         </button>
                     </div>
-                </div>
-            );
-        };
-
-        const MultiSelect = ({ options, selected, onChange, label }) => {
-            const [open, setOpen] = useState(false);
-            const wrapperRef = useRef(null);
-
-            useEffect(() => {
-                const handleClick = (e) => {
-                    if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setOpen(false);
-                };
-                document.addEventListener('mousedown', handleClick);
-                return () => document.removeEventListener('mousedown', handleClick);
-            }, []);
-
-            const toggle = (opt, e) => {
-                e.stopPropagation();
-                const newSel = new Set(selected);
-                if (newSel.has(opt)) newSel.delete(opt);
-                else newSel.add(opt);
-                onChange(Array.from(newSel));
-            };
-
-            const displayText = selected.length === 0 ? `Select ${label}...` : `${selected.length} items selected`;
-
-            return (
-                <div className="multi-select" ref={wrapperRef}>
-                    <div className="form-control multi-select-btn" onClick={() => setOpen(!open)}>
-                        <span style={{ color: selected.length ? 'var(--text)' : '#94a3b8' }}>{displayText}</span>
-                        <Icons.Chevron />
-                    </div>
-                    {open && (
-                        <div className="multi-select-popover">
-                            {options.map(opt => (
-                                <label key={opt} className="multi-select-item" onClick={e => e.stopPropagation()}>
-                                    <input type="checkbox" checked={selected.includes(opt)} onChange={e => toggle(opt, e)} />
-                                    <span>{opt}</span>
-                                </label>
-                            ))}
-                            {options.length === 0 && <div style={{ padding: '8px 12px', color: '#94a3b8' }}>No options available</div>}
-                        </div>
-                    )}
                 </div>
             );
         };
@@ -1684,12 +1193,7 @@
             osm: 'https://tile.openstreetmap.de/3/4/3.png'
         };
 
-        const MAP_LABELS = {
-            light: 'Light',
-            dark: 'Dark',
-            satellite: 'Satellite',
-            osm: 'OSM'
-        };
+        const MAP_LABELS = { light: 'Light', dark: 'Dark', satellite: 'Satellite', osm: 'OSM' };
 
         const MapLayerSwitcher = ({ mapLayer, onLayerChange }) => {
             const [expanded, setExpanded] = useState(false);
@@ -1735,10 +1239,9 @@
             );
         };
 
-        const IconPicker = ({ isOpen, onClose, onSelect, currentIconUrl, currentSize, currentOpacity, currentSingleColor, setMarkerSize, setMarkerOpacity, setSingleColor }) => {
+        const IconPicker = ({ isOpen, onClose, onSelect, currentIconUrl, currentSize, currentOpacity, setMarkerSize, setMarkerOpacity }) => {
             const allIcons = useMemo(() => {
                 const flat = [];
-                flat.push({ type: 'vector', id: 'VECTOR_CIRCLE', label: 'Vector Circle' });
                 Object.values(GE_ICONS).forEach(list => {
                     list.forEach(path => {
                         const url = typeof path === 'number'
@@ -1750,167 +1253,83 @@
                 return flat;
             }, []);
 
-            const [urlVal, setUrlVal] = React.useState(
-                currentIconUrl === 'VECTOR_CIRCLE' ? 'VECTOR_CIRCLE_DESIGN' : (currentIconUrl || '')
-            );
-            React.useEffect(() => {
-                setUrlVal(currentIconUrl === 'VECTOR_CIRCLE' ? 'VECTOR_CIRCLE_DESIGN' : (currentIconUrl || ''));
-            }, [currentIconUrl]);
-
             if (!isOpen) return null;
 
-            const scaleVal = Math.max(1, Math.round(currentSize / 6));
-            const btnBase = {
-                padding: '4px 12px', fontSize: '12px', background: '#f5f5f5',
-                border: '1px solid #ccc', borderRadius: '2px', cursor: 'pointer',
-                fontFamily: 'Tahoma, Arial, sans-serif', lineHeight: '1.4', whiteSpace: 'nowrap'
+            const displaySize = Math.max(1, Math.round(currentSize * 24));
+            
+            const getFriendlyName = (url) => {
+                if (!url) return '';
+                if (url === 'VECTOR_CIRCLE') return 'VECTOR CIRCLE';
+                const parts = url.split('/');
+                return parts[parts.length - 1].replace('.png', '').toUpperCase();
             };
-            const btnOk = { ...btnBase, border: '1px solid #777', padding: '4px 20px' };
 
             return (
-                <div onClick={onClose} style={{
-                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    padding: '16px', zIndex: 10001
-                }}>
-                    <div onClick={e => e.stopPropagation()} style={{
-                        background: '#f0f0f0', width: '100%', maxWidth: '560px', maxHeight: '90vh',
-                        borderRadius: '4px', border: '1px solid #bbb',
-                        display: 'flex', flexDirection: 'column', overflow: 'hidden',
-                        boxShadow: '0 6px 24px rgba(0,0,0,0.25)', fontFamily: 'Tahoma, Arial, sans-serif'
-                    }}>
-
-                        {/* Header */}
-                        <div style={{
-                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                            background: '#e04040', padding: '6px 12px', color: 'white', flexShrink: 0
-                        }}>
-                            <span style={{ fontSize: '13px', fontWeight: 'bold' }}>Icon</span>
-                            <button onClick={onClose} style={{
-                                background: 'none', border: 'none', color: 'white',
-                                cursor: 'pointer', fontWeight: 'bold', fontSize: '16px', lineHeight: 1, padding: '0 2px'
-                            }}>✕</button>
+                <div className="icon-modal-overlay" onClick={onClose}>
+                    <div className="icon-modal-card" onClick={e => e.stopPropagation()}>
+                        <div className="icon-modal-header">
+                            <h3>Icon</h3>
+                            <button className="icon-modal-close" onClick={onClose}>&times;</button>
                         </div>
 
-                        {/* Body */}
-                        <div style={{ padding: '12px', overflowY: 'auto', flex: 1 }}>
-
-                            {/* Top: preview + controls */}
-                            <div style={{ display: 'flex', gap: '12px', marginBottom: '12px', alignItems: 'flex-start' }}>
-
-                                {/* Preview box */}
-                                <div style={{
-                                    width: '84px', height: '84px', flexShrink: 0,
-                                    background: 'white', border: '1px solid #a0a0a0',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                }}>
-                                    {currentIconUrl === 'VECTOR_CIRCLE' ? (
-                                        <div style={{
-                                            width: '52px', height: '52px', borderRadius: '50%',
-                                            background: currentSingleColor,
-                                            border: '2px solid white', boxShadow: '0 0 0 1.5px #666'
-                                        }} />
-                                    ) : (
-                                        <img src={currentIconUrl} alt="Preview"
-                                            style={{ width: '64px', height: '64px', objectFit: 'contain' }}
-                                            onError={e => { e.target.style.opacity = '0.2'; }}
-                                        />
-                                    )}
+                        <div className="icon-modal-body">
+                            <div className="icon-modal-top">
+                                <div className="icon-modal-preview">
+                                    <img src={currentIconUrl === 'VECTOR_CIRCLE' ? '' : currentIconUrl} alt="Preview" onError={e => { e.target.style.opacity = '0.2'; }} />
                                 </div>
 
-                                {/* Controls */}
-                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                            <span style={{ fontSize: '12px', color: '#333' }}>Scale:</span>
-                                            <input type="number" min="1" max="10" value={scaleVal}
-                                                onChange={e => setMarkerSize(Math.max(1, parseInt(e.target.value) || 1) * 6)}
-                                                style={{ width: '48px', fontSize: '12px', border: '1px solid #a0a0a0', padding: '2px 4px' }}
-                                            />
-                                        </div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                            <span style={{ fontSize: '12px', color: '#333' }}>Opacity:</span>
-                                            <select value={currentOpacity}
-                                                onChange={e => setMarkerOpacity(parseInt(e.target.value))}
-                                                style={{ border: '1px solid #a0a0a0', fontSize: '12px', padding: '2px 4px' }}>
-                                                <option value="100">100%</option>
-                                                <option value="75">75%</option>
-                                                <option value="50">50%</option>
-                                                <option value="25">25%</option>
-                                            </select>
-                                        </div>
-
+                                <div className="icon-modal-controls">
+                                    <div className="icon-modal-row">
+                                        <span className="icon-modal-label">Size:</span>
+                                        <input 
+                                            type="number" 
+                                            min="8" max="72" 
+                                            value={displaySize}
+                                            className="icon-modal-input"
+                                            onChange={e => setMarkerSize(Math.max(1, parseInt(e.target.value) || 24) / 24)}
+                                        />
+                                        
+                                        <span className="icon-modal-label" style={{marginLeft: '4px'}}>Opacity:</span>
+                                        <select 
+                                            value={currentOpacity}
+                                            className="icon-modal-select"
+                                            onChange={e => setMarkerOpacity(parseInt(e.target.value))}
+                                        >
+                                            <option value="100">100%</option>
+                                            <option value="75">75%</option>
+                                            <option value="50">50%</option>
+                                            <option value="25">25%</option>
+                                        </select>
                                     </div>
-                                    <input type="text" value={urlVal}
-                                        onChange={e => setUrlVal(e.target.value)}
-                                        style={{
-                                            width: '100%', fontSize: '11px', padding: '4px 6px',
-                                            border: '1px solid #a0a0a0', background: 'white',
-                                            fontFamily: 'monospace', color: '#333', boxSizing: 'border-box'
-                                        }}
+                                    <input 
+                                        type="text" 
+                                        value={getFriendlyName(currentIconUrl)}
+                                        readOnly
+                                        className="icon-modal-name-input"
                                     />
                                 </div>
                             </div>
 
-                            {/* Icon Grid */}
-                            <div style={{
-                                background: 'white', border: '1px solid #a0a0a0',
-                                height: '240px', overflowY: 'auto', padding: '6px'
-                            }}>
-                                <div style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-                                    gap: '2px'
-                                }}>
+                            <div className="icon-modal-grid-wrap">
+                                <div className="icon-modal-grid">
                                     {allIcons.map((item, idx) => {
-                                        const itemUrl = item.url || item.id;
-                                        const isSel = currentIconUrl === itemUrl ||
-                                            (item.type === 'vector' && currentIconUrl === 'VECTOR_CIRCLE');
+                                        const isSel = currentIconUrl === item.url;
                                         return (
                                             <div key={idx}
-                                                onClick={() => onSelect(itemUrl)}
-                                                title={item.path || item.label}
-                                                style={{
-                                                    padding: '4px', cursor: 'pointer', boxSizing: 'border-box',
-                                                    border: isSel ? '2px solid #000' : '2px solid transparent',
-                                                    background: isSel ? '#fff' : 'transparent',
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                                }}
+                                                onClick={() => onSelect(item.url)}
+                                                className={`icon-modal-item ${isSel ? 'selected' : ''}`}
                                             >
-                                                {item.type === 'vector' ? (
-                                                    <div style={{
-                                                        width: '24px', height: '24px', borderRadius: '50%',
-                                                        background: currentSingleColor,
-                                                        border: '1.5px solid white', boxShadow: '0 0 0 1.5px #666'
-                                                    }} />
-                                                ) : (
-                                                    <img src={item.url} alt="" loading="lazy"
-                                                        style={{ width: '30px', height: '30px', objectFit: 'contain', display: 'block' }}
-                                                        onError={e => { e.target.style.display = 'none'; }}
-                                                    />
-                                                )}
+                                                <img src={item.url} alt="" loading="lazy" onError={e => { e.target.style.display = 'none'; }} />
                                             </div>
                                         );
                                     })}
                                 </div>
                             </div>
+                        </div>
 
-                            {/* Footer */}
-                            <div style={{
-                                display: 'flex', justifyContent: 'space-between',
-                                marginTop: '12px', flexWrap: 'wrap', gap: '8px'
-                            }}>
-                                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                                    <button style={btnBase}>Add Custom...</button>
-                                    <button style={btnBase}>Clear Custom</button>
-                                    <button style={btnBase} onClick={() => onSelect('VECTOR_CIRCLE')}>No Icon</button>
-                                </div>
-                                <div style={{ display: 'flex', gap: '6px' }}>
-                                    <button style={btnOk} onClick={onClose}>OK</button>
-                                    <button style={btnBase} onClick={onClose}>Cancel</button>
-                                </div>
-                            </div>
-
+                        <div className="icon-modal-footer">
+                            <button className="icon-modal-btn icon-btn-cancel" onClick={onClose}>Cancel</button>
+                            <button className="icon-modal-btn icon-btn-ok" onClick={onClose}>OK</button>
                         </div>
                     </div>
                 </div>
@@ -1918,30 +1337,29 @@
         };
 
         const App = () => {
-
             const [file, setFile] = useState(null);
             const [data, setData] = useState([]);
             const [columns, setColumns] = useState([]);
 
             const [mapping, setMapping] = useState({ lat: '', lng: '', siteName: '', popupCols: [] });
 
-            const [markerIconUrl, setMarkerIconUrl] = useState('VECTOR_CIRCLE');
+            const [markerIconUrl, setMarkerIconUrl] = useState('https://maps.google.com/mapfiles/kml/paddle/red-blank.png');
             const [showIconPicker, setShowIconPicker] = useState(false);
-            const [editingCategory, setEditingCategory] = useState(null); // null means editing global, string means editing category
+            const [editingCategory, setEditingCategory] = useState(null);
 
             const [markerSize, setMarkerSize] = useState(1.0);
-
             const [markerOpacity, setMarkerOpacity] = useState(100);
 
             const [colorMode, setColorMode] = useState('single');
             const [singleColor, setSingleColor] = useState('#2563eb');
             const [categoryCol, setCategoryCol] = useState('');
 
+            const [colorAssignmentMode, setColorAssignmentMode] = useState('manual');
+            const [manualCategoryStyles, setManualCategoryStyles] = useState({});
+
             const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
-            const [isDragging, setIsDragging] = useState(false);
             const [activeTab, setActiveTab] = useState('upload');
 
-            // Collapsible section states
             const [isUploadOpen, setIsUploadOpen] = useState(true);
             const [isColumnsOpen, setIsColumnsOpen] = useState(true);
             const [isStyleOpen, setIsStyleOpen] = useState(true);
@@ -1949,7 +1367,6 @@
 
             const [mapLayer, setMapLayer] = useState('light');
 
-            // Export filtering state
             const [filterCol, setFilterCol] = useState('');
             const [filterVals, setFilterVals] = useState([]);
             const [showOnMap, setShowOnMap] = useState(false);
@@ -1958,10 +1375,6 @@
             const [searchTerm, setSearchTerm] = useState('');
             const [showLegend, setShowLegend] = useState(true);
             const [showSiteLabels, setShowSiteLabels] = useState(false);
-
-            const [colorAssignmentMode, setColorAssignmentMode] = useState('manual'); // always manual now
-
-            const [manualCategoryStyles, setManualCategoryStyles] = useState({}); // { 'CatName': { color, iconUrl, size, opacity } }
 
             const fileInputRef = useRef(null);
 
@@ -2000,7 +1413,6 @@
                 if (parsedData.length === 0) return;
                 const cols = Object.keys(parsedData[0]).filter(c => c !== '#');
                 setColumns(cols);
-
                 setData(parsedData);
 
                 const guessLat = cols.find(c => /lat|latitude|coord/i.test(c)) || '';
@@ -2011,14 +1423,6 @@
                 setCategoryCol('');
                 setFilterCol('');
                 setFilterVals([]);
-
-            };
-
-            const resetApp = () => {
-                setFile(null);
-                setData([]);
-                setColumns([]);
-                setMapping({ lat: '', lng: '', siteName: '', popupCols: [] });
             };
 
             const uniqueFilterVals = useMemo(() => {
@@ -2063,86 +1467,57 @@
                 return result;
             }, [data, searchTerm, filterCol, filterVals, mapping.siteName]);
 
-            const exportCSV = () => {
-                if (!filteredData.length) return;
-                const csv = Papa.unparse(filteredData);
-                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement("a");
-                const url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", "export.csv");
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            };
-
             const exportKML = () => {
                 if (!filteredData.length || !mapping.lat || !mapping.lng) return;
 
                 let kml = `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
-  <name>Input Parameter</name>
+  <name>Exported Map</name>
 `;
-
-                // Helper: convert hex #RRGGBB to KML aaBBGGRR (with opacity)
                 const hexToKml = (hex, opacity) => {
-                    const r = hex.slice(1, 3);
-                    const g = hex.slice(3, 5);
-                    const b = hex.slice(5, 7);
+                    const r = hex.slice(1, 3), g = hex.slice(3, 5), b = hex.slice(5, 7);
                     const a = Math.round((opacity ?? markerOpacity) / 100 * 255).toString(16).padStart(2, '0');
                     return (a + b + g + r).toLowerCase();
                 };
 
                 const styles = {};
                 const catColorsMap = {};
+                const catIconsMap = {};
                 let catIdx = 0;
 
-                // Generate styles
                 if (colorMode === 'category' && categoryCol) {
                     filteredData.forEach(row => {
                         if (row[categoryCol] !== undefined) {
                             const val = String(row[categoryCol]);
                             let color, iconUrl;
+                            
+                            if (!catColorsMap[val]) { 
+                                catColorsMap[val] = PALETTE[catIdx % PALETTE.length]; 
+                                catIconsMap[val] = DEFAULT_GE_PADDLES[catIdx % DEFAULT_GE_PADDLES.length];
+                                catIdx++; 
+                            }
+                            
                             if (colorAssignmentMode === 'manual' && manualCategoryStyles[val]) {
-                                color = manualCategoryStyles[val].color;
-                                iconUrl = manualCategoryStyles[val].iconUrl;
+                                color = manualCategoryStyles[val].color || catColorsMap[val];
+                                iconUrl = manualCategoryStyles[val].iconUrl || catIconsMap[val];
                             } else {
-                                if (!catColorsMap[val]) {
-                                    catColorsMap[val] = PALETTE[catIdx % PALETTE.length];
-                                    catIdx++;
-                                }
                                 color = catColorsMap[val];
-                                iconUrl = markerIconUrl;
+                                iconUrl = catIconsMap[val];
                             }
 
                             const kmlColor = hexToKml(color, markerOpacity);
                             const iconScale = markerSize;
-
                             if (val && !styles[val]) {
                                 let finalIconUrl = iconUrl;
                                 const isVector = finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl;
-                                if (isVector) {
-                                    finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
-                                }
-                                // Only tint color for vector circles; real icons keep their natural color
+                                if (isVector) finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
                                 const styleColor = isVector ? kmlColor : hexToKml('#ffffff', markerOpacity);
                                 styles[val] = `
   <Style id="cat_${val.replace(/[^a-z0-9]/gi, '_')}">
-    <IconStyle>
-      <color>${styleColor}</color>
-      <scale>${iconScale}</scale>
-      <Icon>
-        <href>${finalIconUrl}</href>
-      </Icon>
-    </IconStyle>
-    <LabelStyle>
-      <scale>0.7</scale>
-    </LabelStyle>
-    <BalloonStyle>
-      <text><![CDATA[$[description]]]></text>
-    </BalloonStyle>
+    <IconStyle><color>${styleColor}</color><scale>${iconScale}</scale><Icon><href>${finalIconUrl}</href></Icon></IconStyle>
+    <LabelStyle><scale>0.7</scale></LabelStyle>
+    <BalloonStyle><text><![CDATA[$[description]]]></text></BalloonStyle>
   </Style>`;
                             }
                         }
@@ -2152,53 +1527,31 @@
                     const iconScale = markerSize;
                     let finalIconUrl = markerIconUrl;
                     const isVector = finalIconUrl === 'VECTOR_CIRCLE' || !finalIconUrl;
-                    if (isVector) {
-                        finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
-                    }
+                    if (isVector) finalIconUrl = 'http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png';
                     const styleColor = isVector ? kmlColor : hexToKml('#ffffff', markerOpacity);
                     styles['default'] = `
   <Style id="style_default">
-    <IconStyle>
-      <color>${styleColor}</color>
-      <scale>${iconScale}</scale>
-      <Icon>
-        <href>${finalIconUrl}</href>
-      </Icon>
-    </IconStyle>
-    <LabelStyle>
-      <scale>0.7</scale>
-    </LabelStyle>
-    <BalloonStyle>
-      <text><![CDATA[$[description]]]></text>
-    </BalloonStyle>
+    <IconStyle><color>${styleColor}</color><scale>${iconScale}</scale><Icon><href>${finalIconUrl}</href></Icon></IconStyle>
+    <LabelStyle><scale>0.7</scale></LabelStyle>
+    <BalloonStyle><text><![CDATA[$[description]]]></text></BalloonStyle>
   </Style>`;
                 }
 
                 kml += Object.values(styles).join('\n');
-
-                // Determine which columns to show in popup
-                const popupColumns = (mapping.popupCols && mapping.popupCols.length > 0)
-                    ? mapping.popupCols
-                    : [];
+                const popupColumns = (mapping.popupCols && mapping.popupCols.length > 0) ? mapping.popupCols : [];
 
                 filteredData.forEach((row, i) => {
-                    const lat = parseFloat(row[mapping.lat]);
-                    const lng = parseFloat(row[mapping.lng]);
+                    const lat = parseFloat(row[mapping.lat]), lng = parseFloat(row[mapping.lng]);
                     if (isNaN(lat) || isNaN(lng)) return;
 
                     const siteName = (mapping.siteName && row[mapping.siteName]) ? String(row[mapping.siteName]) : `Point ${i + 1}`;
-
                     let desc = '';
                     if (popupColumns.length > 0) {
                         desc = `<![CDATA[<div style="font-size:13px;"><b>${siteName}</b><hr style="margin:4px 0;">` ;
-                        popupColumns.forEach(k => {
-                            desc += `<div><b>${k}:</b> ${row[k] ?? ''}</div>`;
-                        });
+                        popupColumns.forEach(k => { desc += `<div><b>${k}:</b> ${row[k] ?? ''}</div>`; });
                         desc += '</div>]]>';
                     }
-
                     const name = siteName;
-
                     let styleId = 'style_default';
                     if (colorMode === 'category' && categoryCol && row[categoryCol] !== undefined) {
                         const val = String(row[categoryCol]);
@@ -2207,18 +1560,12 @@
 
                     kml += `  <Placemark>
     <name>${name}</name>
-    <Snippet maxLines="0"></Snippet>
     <description>${desc}</description>
     <styleUrl>#${styleId}</styleUrl>
-    <Point>
-      <coordinates>${lng},${lat},0</coordinates>
-    </Point>
-  </Placemark>
-`;
+    <Point><coordinates>${lng},${lat},0</coordinates></Point>
+  </Placemark>\n`;
                 });
-
-                kml += `</Document>
-</kml>`;
+                kml += `</Document></kml>`;
 
                 const blob = new Blob([kml], { type: 'application/vnd.google-earth.kml+xml' });
                 const link = document.createElement("a");
@@ -2232,39 +1579,24 @@
 
             return (
                 <div className="app-wrapper">
-                    {/* Global Header */}
                     <header className="global-header">
                         <button className="toggle-btn" onClick={() => setSidebarOpen(prev => !prev)} style={{ padding: '4px' }}>
                             <Icons.Menu />
                         </button>
                         <h1 style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', letterSpacing: '-0.01em', margin: 0 }}>Point File Creator</h1>
-                        <div style={{ flex: 1 }}></div>
                     </header>
 
                     <div className="layout">
                     {/* SIDEBAR */}
                     <div className={`sidebar ${sidebarOpen ? '' : 'collapsed'}`}>
-                        {/* Tabs */}
                         <div className="sidebar-tabs">
-                            <button className={`tab-btn ${activeTab === 'upload' ? 'active' : ''}`} onClick={() => setActiveTab('upload')}>
-                                <Icons.Upload />
-                                <span>Upload</span>
-                            </button>
-                            <button className={`tab-btn ${activeTab === 'columns' ? 'active' : ''}`} onClick={() => setActiveTab('columns')}>
-                                <Icons.Columns />
-                                <span>Columns</span>
-                            </button>
-                            <button className={`tab-btn ${activeTab === 'style' ? 'active' : ''}`} onClick={() => setActiveTab('style')}>
-                                <Icons.Style />
-                                <span>Style</span>
-                            </button>
-                            <button className={`tab-btn ${activeTab === 'filter' ? 'active' : ''}`} onClick={() => setActiveTab('filter')}>
-                                <Icons.Filter />
-                                <span>Filter</span>
-                            </button>
+                            <button className={`tab-btn ${activeTab === 'upload' ? 'active' : ''}`} onClick={() => setActiveTab('upload')}><Icons.Upload /><span>Upload</span></button>
+                            <button className={`tab-btn ${activeTab === 'columns' ? 'active' : ''}`} onClick={() => setActiveTab('columns')}><Icons.Columns /><span>Columns</span></button>
+                            <button className={`tab-btn ${activeTab === 'style' ? 'active' : ''}`} onClick={() => setActiveTab('style')}><Icons.Style /><span>Style</span></button>
+                            <button className={`tab-btn ${activeTab === 'filter' ? 'active' : ''}`} onClick={() => setActiveTab('filter')}><Icons.Filter /><span>Filter</span></button>
                         </div>
 
-                        <div className="sidebar-content custom-scroll" style={{ padding: 0 }}>
+                        <div className="sidebar-content" style={{ padding: 0 }}>
                             {activeTab === 'upload' && (
                                 <div className="panel">
                                     <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
@@ -2279,12 +1611,7 @@
                                                 <div style={{ fontSize: '12px', fontWeight: 600, color: '#0f172a', textAlign: 'center' }}>Drag & Drop or <span style={{ textDecoration: 'underline' }}>Browse</span></div>
                                                 <div style={{ fontSize: '10px', color: '#94a3b8', textAlign: 'center' }}>CSV · TXT · XLS · XLSX</div>
                                             </label>
-                                            {data.length > 0 && (
-                                                <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '12px', color: '#10b981', fontWeight: 600 }}>
-                                                    ✓ {data.length} records loaded
-                                                </div>
-                                            )}
-
+                                            {data.length > 0 && <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '12px', color: '#10b981', fontWeight: 600 }}>✓ {data.length} records loaded</div>}
                                         </div>
                                     </div>
                                 </div>
@@ -2300,7 +1627,7 @@
                                         <div style={{ display: isColumnsOpen ? 'block' : 'none', padding: '0 16px 16px 16px' }}>
                                             {[{ label: 'Site Name', key: 'siteName' }, { label: 'Latitude', key: 'lat' }, { label: 'Longitude', key: 'lng' }].map(field => (
                                                 <div key={field.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                                                    <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>{field.label} <span style={{ color: '#ef4444' }}>*</span></div>
+                                                    <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>{field.label}</div>
                                                     <select className="form-control" style={{ width: '60%', height: '32px', fontSize: '12px', padding: '0 8px' }} value={mapping[field.key]} onChange={e => setMapping({ ...mapping, [field.key]: e.target.value })}>
                                                         <option value="">-- Select --</option>
                                                         {columns.map(c => <option key={c} value={c}>{c}</option>)}
@@ -2319,7 +1646,6 @@
                                                         <span style={{ fontSize: '11px', color: '#334155' }}>{h}</span>
                                                     </label>
                                                 ))}
-
                                             </div>
                                         </div>
                                     </div>
@@ -2334,17 +1660,24 @@
                                             <div style={{ transform: isStyleOpen ? 'rotate(0deg)' : 'rotate(-90deg)', transition: 'transform 0.2s' }}><Icons.Chevron /></div>
                                         </div>
                                         <div style={{ display: isStyleOpen ? 'block' : 'none', padding: '0 16px 16px 16px' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Color Mode</div>
-                                                <select className="form-control" style={{ width: '60%', height: '32px', fontSize: '12px', padding: '0 8px' }} value={colorMode} onChange={e => setColorMode(e.target.value)}>
-                                                    <option value="single">Single Color</option>
-                                                    <option value="category">Categorized</option>
-                                                </select>
+                                            
+                                            <div style={{ marginBottom: '16px' }}>
+                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155', marginBottom: '8px' }}>Color Mode</div>
+                                                <div className="mode-selector" style={{ marginBottom: 0 }}>
+                                                    <div className={`mode-option ${colorMode === 'single' ? 'active' : ''}`}
+                                                        onClick={() => setColorMode('single')}>
+                                                        Single Color
+                                                    </div>
+                                                    <div className={`mode-option ${colorMode === 'category' ? 'active' : ''}`}
+                                                        onClick={() => setColorMode('category')}>
+                                                        Categorized
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {colorMode === 'single' && (
                                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', padding: '8px', background: '#f8fafc', borderRadius: '6px', cursor: 'pointer' }} onClick={() => { setEditingCategory(null); setShowIconPicker(true); }}>
-                                                    <span style={{ fontSize: '11px', color: '#334155' }}>Default Style</span>
+                                                    <span style={{ fontSize: '11px', color: '#334155' }}>Marker Style</span>
                                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                         <div style={{ width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
                                                             {markerIconUrl === 'VECTOR_CIRCLE' ? <div style={{ background: singleColor, width: '14px', height: '14px', borderRadius: '50%' }}></div> : <img src={markerIconUrl} style={{ maxWidth: '20px', maxHeight: '20px' }} />}
@@ -2365,16 +1698,19 @@
                                                     {categoryCol && uniqueCategoryVals.length > 0 && (
                                                         <div style={{ marginBottom: '12px', padding: '10px', background: '#f1f5f9', borderRadius: '6px' }}>
                                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                                                                <span style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Manual Color & Icon</span>
+                                                                <span style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Manual Style List</span>
                                                             </div>
                                                             <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
                                                                 {uniqueCategoryVals.map((val, i) => {
-                                                                    const style = manualCategoryStyles[val] || { color: PALETTE[i % PALETTE.length], iconUrl: 'VECTOR_CIRCLE' };
+                                                                    const defaultColor = PALETTE[i % PALETTE.length];
+                                                                    const defaultIcon = DEFAULT_GE_PADDLES[i % DEFAULT_GE_PADDLES.length];
+                                                                    const style = manualCategoryStyles[val] || { color: defaultColor, iconUrl: defaultIcon };
+                                                                    
                                                                     return (
                                                                         <div key={val} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', padding: '8px', background: '#f8fafc', borderRadius: '6px', cursor: 'pointer' }} onClick={() => { setEditingCategory(val); setShowIconPicker(true); }}>
                                                                             <span style={{ fontSize: '11px', color: '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{val}</span>
                                                                             <div style={{ width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
-                                                                                {style.iconUrl === 'VECTOR_CIRCLE' ? <div style={{ background: style.color, width: '14px', height: '14px', borderRadius: '50%' }}></div> : <img src={style.iconUrl} style={{ maxWidth: '20px', maxHeight: '20px' }} />}
+                                                                                {style.iconUrl === 'VECTOR_CIRCLE' ? <div style={{ background: style.color, width: '14px', height: '14px', borderRadius: '50%' }}></div> : <img src={getIconUrl(style.iconUrl)} style={{ maxWidth: '20px', maxHeight: '20px' }} />}
                                                                             </div>
                                                                         </div>
                                                                     );
@@ -2387,10 +1723,12 @@
 
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px' }}>
                                                 <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Global Icon Scale</div>
-                                                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{Number(markerSize).toFixed(1)}x</div>
+                                                <div style={{ fontSize: '10px', color: '#94a3b8' }}>{markerSize.toFixed(1)}x</div>
                                             </div>
                                             <div style={{ marginTop: '4px' }}>
-                                                <input type="range" min="0.5" max="3.0" step="0.1" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerSize} onChange={e => setMarkerSize(parseFloat(e.target.value))} />
+                                                <input type="range" min="0.5" max="3.0" step="0.1" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerSize} onChange={e => {
+                                                    setMarkerSize(parseFloat(e.target.value));
+                                                }} />
                                             </div>
 
                                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px' }}>
@@ -2398,24 +1736,25 @@
                                                 <div style={{ fontSize: '10px', color: '#94a3b8' }}>{markerOpacity}%</div>
                                             </div>
                                             <div style={{ marginTop: '4px' }}>
-                                                <input type="range" min="10" max="100" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerOpacity} onChange={e => setMarkerOpacity(parseInt(e.target.value))} />
+                                                <input type="range" min="10" max="100" style={{ width: '100%', height: '4px', accentColor: '#334155' }} value={markerOpacity} onChange={e => {
+                                                    setMarkerOpacity(parseInt(e.target.value));
+                                                }} />
                                             </div>
 
-                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
-                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Show Legend</div>
-                                                <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '40px', height: '20px' }}>
-                                                    <input type="checkbox" checked={showLegend} onChange={e => setShowLegend(e.target.checked)} style={{ opacity: 0, width: 0, height: 0 }} />
-                                                    <span style={{ position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: showLegend ? '#000000' : '#cbd5e1', transition: '0.4s', borderRadius: '20px' }}></span>
-                                                    <span style={{ position: 'absolute', content: '""', height: '14px', width: '14px', left: '3px', bottom: '3px', backgroundColor: 'white', transition: '0.4s', borderRadius: '50%', transform: showLegend ? 'translateX(20px)' : 'translateX(0)' }}></span>
-                                                </label>
-                                            </div>
-
-                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #e2e8f0' }}>
                                                 <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Site Labels</div>
                                                 <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '40px', height: '20px' }}>
                                                     <input type="checkbox" checked={showSiteLabels} onChange={e => setShowSiteLabels(e.target.checked)} style={{ opacity: 0, width: 0, height: 0 }} />
                                                     <span style={{ position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: showSiteLabels ? '#000000' : '#cbd5e1', transition: '0.4s', borderRadius: '20px' }}></span>
                                                     <span style={{ position: 'absolute', content: '""', height: '14px', width: '14px', left: '3px', bottom: '3px', backgroundColor: 'white', transition: '0.4s', borderRadius: '50%', transform: showSiteLabels ? 'translateX(20px)' : 'translateX(0)' }}></span>
+                                                </label>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>
+                                                <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155' }}>Map Legend</div>
+                                                <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '40px', height: '20px' }}>
+                                                    <input type="checkbox" checked={showLegend} onChange={e => setShowLegend(e.target.checked)} style={{ opacity: 0, width: 0, height: 0 }} />
+                                                    <span style={{ position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: showLegend ? '#000000' : '#cbd5e1', transition: '0.4s', borderRadius: '20px' }}></span>
+                                                    <span style={{ position: 'absolute', content: '""', height: '14px', width: '14px', left: '3px', bottom: '3px', backgroundColor: 'white', transition: '0.4s', borderRadius: '50%', transform: showLegend ? 'translateX(20px)' : 'translateX(0)' }}></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -2434,9 +1773,7 @@
                                             <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155', marginBottom: '8px' }}>Search</div>
                                             <div style={{ position: 'relative', marginBottom: '16px' }}>
                                                 <input type="text" placeholder="Search site..." className="form-control" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} style={{ backgroundColor: '#f8fafc', color: '#0f172a', border: '1px solid #e2e8f0', width: '100%', height: '38px', fontSize: '12px', padding: '0 36px 0 12px', borderRadius: '6px' }} />
-                                                <div style={{ position: 'absolute', right: '12px', top: '11px', color: '#94a3b8' }}>
-                                                    <Icons.Search />
-                                                </div>
+                                                <div style={{ position: 'absolute', right: '12px', top: '11px', color: '#94a3b8' }}><Icons.Search /></div>
                                             </div>
 
                                             <div style={{ fontSize: '11px', fontWeight: 600, color: '#334155', marginBottom: '8px' }}>Column Filter</div>
@@ -2452,19 +1789,15 @@
                                             </div>
                                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                                 {(filterCol || filterVals.length > 0 || searchTerm) && (
-                                                    <button style={{ fontSize: '11px', color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, padding: '4px 0' }} onClick={() => { setFilterCol(''); setFilterVals([]); setSearchTerm(''); }}>
-                                                        Clear all filters
-                                                    </button>
+                                                    <button style={{ fontSize: '11px', color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600, padding: '4px 0' }} onClick={() => { setFilterCol(''); setFilterVals([]); setSearchTerm(''); }}>Clear all filters</button>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Export Section */}
+                                    {/* Actions Section */}
                                     <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
-                                        <div style={{ padding: '12px 16px' }}>
-                                            <span style={{ fontWeight: 700, fontSize: '11px', color: '#334155' }}>5. ACTIONS</span>
-                                        </div>
+                                        <div style={{ padding: '12px 16px' }}><span style={{ fontWeight: 700, fontSize: '11px', color: '#334155' }}>5. ACTIONS</span></div>
                                         <div style={{ padding: '0 16px 16px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                             <button className="btn" onClick={() => {
                                                 if (!mapping.lat || !mapping.lng || !data.length) return;
@@ -2473,12 +1806,7 @@
                                                 let progress = 0;
                                                 const interval = setInterval(() => {
                                                     progress += Math.random() * 15 + 5;
-                                                    if (progress >= 100) {
-                                                        progress = 100;
-                                                        clearInterval(interval);
-                                                        setIsDrawing(false);
-                                                        setShowOnMap(true);
-                                                    }
+                                                    if (progress >= 100) { progress = 100; clearInterval(interval); setIsDrawing(false); setShowOnMap(true); }
                                                     setDrawProgress(Math.min(progress, 100));
                                                 }, 100);
                                             }} disabled={!mapping.lat || !mapping.lng || !data.length || isDrawing} style={{ backgroundColor: (!mapping.lat || !mapping.lng || !data.length || isDrawing) ? '#94a3b8' : '#0f172a', color: '#fff', border: 'none', width: '100%', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', borderRadius: '6px', cursor: (!mapping.lat || !mapping.lng || !data.length || isDrawing) ? 'not-allowed' : 'pointer' }}>
@@ -2487,19 +1815,15 @@
                                             </button>
                                             {isDrawing && (
                                                 <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '8px', marginTop: '2px' }}>
-                                                    <div style={{ flex: 1, height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
-                                                        <div style={{ width: `${drawProgress}%`, height: '100%', background: '#0f172a', transition: 'width 0.08s linear' }}></div>
-                                                    </div>
+                                                    <div style={{ flex: 1, height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}><div style={{ width: `${drawProgress}%`, height: '100%', background: '#0f172a', transition: 'width 0.08s linear' }}></div></div>
                                                     <span style={{ fontSize: '10px', fontWeight: 700, color: '#334155', minWidth: '34px', textAlign: 'right' }}>{Math.round(drawProgress)}%</span>
                                                 </div>
                                             )}
                                             <button className="btn" onClick={exportKML} disabled={!mapping.lat || !mapping.lng} style={{ backgroundColor: '#fff', color: '#334155', border: '1px solid #e2e8f0', width: '100%', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', borderRadius: '6px', cursor: 'pointer', position: 'relative' }}>
-                                                <Icons.Export /> Export KML
-                                                <div style={{ fontSize: '10px', color: '#94a3b8', position: 'absolute', right: '12px' }}>(Earth)</div>
+                                                <Icons.Export /> Export KML <div style={{ fontSize: '10px', color: '#94a3b8', position: 'absolute', right: '12px' }}>(Earth)</div>
                                             </button>
                                             <button className="btn" onClick={() => { setShowOnMap(false); setDrawProgress(0); }} disabled={!data.length} style={{ backgroundColor: '#fff', color: '#ef4444', border: '1px solid #fee2e2', width: '100%', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', borderRadius: '6px', cursor: 'pointer' }}>
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                Clear
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg> Clear
                                             </button>
                                         </div>
                                     </div>
@@ -2510,7 +1834,6 @@
 
                     {/* MAIN CONTENT */}
                     <div className={`main-content ${sidebarOpen ? '' : 'expanded'}`}>
-
                         <div className="tab-content" style={{ flex: 1, position: 'relative' }}>
                             <div style={{ height: '100%', position: 'relative' }}>
                                 <MapLayerSwitcher mapLayer={mapLayer} onLayerChange={setMapLayer} />
@@ -2534,6 +1857,7 @@
                             </div>
                         </div>
 
+                        {/* Modals */}
                         <IconPicker
                             isOpen={showIconPicker}
                             onClose={() => { setShowIconPicker(false); setEditingCategory(null); }}
@@ -2544,36 +1868,18 @@
                                         [editingCategory]: {
                                             ...(manualCategoryStyles[editingCategory] || {}),
                                             iconUrl: url,
-                                            // Provide default color if not set
                                             color: manualCategoryStyles[editingCategory]?.color || PALETTE[uniqueCategoryVals.indexOf(editingCategory) % PALETTE.length]
                                         }
                                     });
                                 } else {
                                     setMarkerIconUrl(url);
                                 }
-                                setShowIconPicker(false);
-                                setEditingCategory(null);
                             }}
                             currentIconUrl={editingCategory ? (manualCategoryStyles[editingCategory]?.iconUrl || 'VECTOR_CIRCLE') : markerIconUrl}
                             currentSize={markerSize}
                             currentOpacity={markerOpacity}
-                            currentSingleColor={editingCategory ? (manualCategoryStyles[editingCategory]?.color || '#2563eb') : singleColor}
                             setMarkerSize={setMarkerSize}
                             setMarkerOpacity={setMarkerOpacity}
-                            setSingleColor={(col) => {
-                                if (editingCategory) {
-                                    setManualCategoryStyles({
-                                        ...manualCategoryStyles,
-                                        [editingCategory]: {
-                                            ...(manualCategoryStyles[editingCategory] || {}),
-                                            color: col,
-                                            iconUrl: manualCategoryStyles[editingCategory]?.iconUrl || 'VECTOR_CIRCLE'
-                                        }
-                                    });
-                                } else {
-                                    setSingleColor(col);
-                                }
-                            }}
                         />
                     </div>
                     </div>
