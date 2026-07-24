@@ -504,6 +504,9 @@
             border-bottom: none !important;
         }
 
+        .map-control-btn.cluster-active {
+        }
+
         .leaflet-control-zoom {
             border: none !important;
             margin: 0 !important;
@@ -848,10 +851,11 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            padding: 12px 20px;
+            padding: 12px 20px 36px;
             background: #ececec;
             border-bottom-left-radius: 6px;
             border-bottom-right-radius: 6px;
+            position: relative;
         }
 
         .icon-modal-actions {
@@ -902,10 +906,12 @@
         .icon-btn-ok:hover { background: #f1f5f9; }
 
         .icon-modal-svglink {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
             font-size: 12px;
             color: #187ef4;
             text-decoration: none;
-            margin-left: auto;
         }
 
         .icon-modal-svglink:hover { text-decoration: underline; }
@@ -915,91 +921,302 @@
             .sidebar { width: 100%; z-index: 3000; }
             .main-content { left: 0 !important; }
             .panel { padding: 12px; }
-            .map-legend { bottom: 12px; right: 12px; left: 12px; max-width: none; width: auto; max-height: none; }
+            .map-legend { bottom: 12px; right: 12px; left: 12px; max-width: none; width: auto; }
             .layer-switcher { top: 12px; right: 12px; }
+
+            /* ─── Icon Picker Mobile – matches desktop design ─── */
+            .icon-modal-overlay {
+                padding: 8px;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
             .icon-modal-card {
-                max-height: 70vh !important;
-                min-height: 0 !important;
-                max-width: 340px;
-                width: calc(100vw - 32px);
-                resize: none !important;
-                position: relative;
-            }
-            .icon-modal-card button,
-            .icon-modal-card span,
-            .icon-modal-card input,
-            .icon-modal-card a,
-            .icon-modal-card label {
-                font-size: 11px !important;
-            }
-            .icon-modal-card button {
-                padding: 5px 16px !important;
-                white-space: nowrap;
-            }
-            .icon-modal-body {
-                padding: 8px 10px;
-            }
-            .icon-modal-body .icon-modal-grid-wrap {
-                height: 160px;
-            }
-            .icon-modal-grid {
-                grid-template-columns: repeat(8, 1fr);
-                gap: 4px;
-            }
-            .icon-modal-item img {
-                max-width: 32px;
-                max-height: 32px;
-            }
-            .icon-modal-footer {
-                padding: 6px 10px;
-            }
-            .icon-modal-footer .icon-modal-btn {
-                flex: 1;
-                text-align: center;
-            }
-            .icon-modal-top {
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 8px;
-                padding: 8px 10px 6px;
-            }
-            .icon-modal-controls {
+                max-height: 96vh;
+                min-height: 0;
+                max-width: 100%;
                 width: 100%;
-                gap: 6px;
-            }
-            .icon-modal-row {
+                resize: none !important;
+                border-radius: 6px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                animation: modalFadeIn 0.2s ease;
+                display: flex;
                 flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
+                overflow: hidden;
             }
+
+            @keyframes modalFadeIn {
+                from { opacity: 0; transform: scale(0.96); }
+                to   { opacity: 1; transform: scale(1); }
+            }
+
+            /* Header – same dark bar as desktop */
+            .icon-modal-header {
+                padding: 6px 10px;
+                border-radius: 6px 6px 0 0;
+                background: #363636;
+            }
+
+            .icon-modal-header h3 {
+                font-size: 13px;
+                font-weight: 500;
+            }
+
+            .icon-modal-close {
+                font-size: 16px;
+                width: auto;
+                height: auto;
+                color: #e0e0e0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* ── Top Section: preview left, controls right (same as desktop) ── */
+            .icon-modal-top {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                gap: 12px;
+                padding: 12px 14px 10px;
+                flex-wrap: nowrap !important;
+            }
+
+            .icon-modal-preview {
+                width: 60px !important;
+                height: 60px !important;
+                min-width: 60px;
+                min-height: 60px;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                flex-shrink: 0;
+                box-shadow: none;
+            }
+
+            .icon-modal-preview img,
+            .icon-modal-preview svg {
+                max-width: 60px;
+                max-height: 60px;
+            }
+
+            .icon-modal-controls {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 0;
+            }
+
+            /* Controls row: Color / Scale / Opacity horizontally */
+            .icon-modal-row {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 8px;
+                flex-wrap: nowrap !important;
+            }
+
             .icon-modal-row > div {
                 display: flex !important;
                 align-items: center;
-                justify-content: space-between !important;
+                gap: 4px;
+                min-width: 0;
+            }
+
+            .icon-modal-label {
+                font-size: 9px;
+                font-weight: 500;
+                color: #000;
+                white-space: nowrap;
+            }
+
+            .icon-modal-input {
+                width: 38px !important;
+                min-width: 32px;
+                padding: 2px 3px;
+                font-size: 11px;
+                text-align: center;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            /* Color picker swatch */
+            .icon-modal-row input[type="color"] {
+                width: 24px !important;
+                height: 24px !important;
+                min-width: 24px;
+                padding: 0;
+                border: 1px solid #999;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+
+            /* Spinner arrows */
+            .icon-modal-row > div > div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 0;
+            }
+
+            .icon-modal-row > div > div span {
+                font-size: 7px;
+                line-height: 1;
+                padding: 0px 2px;
+            }
+
+            /* URL bar */
+            .icon-modal-name-input {
+                font-size: 9px;
+                padding: 4px 6px;
+                border-radius: 0;
+                background: #fff;
+                border: 1px solid #e5e5e5;
                 width: 100%;
             }
+
+            /* ── Grid Area ── */
+            .icon-modal-grid-area {
+                padding: 0 14px 10px;
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .icon-modal-grid-wrap {
+                flex: 1;
+                min-height: 180px;
+                max-height: 46vh;
+                border-radius: 0;
+                border: 2px solid #8ccbf8;
+                padding: 6px;
+                background: #fff;
+                overflow-y: auto;
+            }
+
+            .icon-modal-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+                gap: 3px;
+            }
+
+            .icon-modal-item {
+                aspect-ratio: 1;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2px;
+                border: 1px solid transparent;
+                transition: all 0.1s ease;
+            }
+
+            .icon-modal-item:hover { background: #f1f5f9; }
+            .icon-modal-item.selected {
+                border: 1px dotted #555;
+                background: #f0f8ff;
+            }
+
+            .icon-modal-item img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                display: block;
+            }
+
+            /* ── Footer ── */
+            .icon-modal-footer {
+                padding: 8px 10px 10px;
+                gap: 4px;
+                background: #ececec;
+                border-top: 1px solid #d4d4d4;
+                flex-shrink: 0;
+            }
+
             .icon-modal-actions {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 6px;
+                display: flex;
+                flex-direction: row !important;
+                flex-wrap: nowrap;
+                gap: 4px;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
             }
-            .icon-modal-actions button {
-                width: auto;
-                justify-content: center;
-                flex: 1;
+
+            /* All buttons in a single row matching desktop layout */
+            .icon-modal-actions > div:first-child {
+                display: flex;
+                flex-direction: row !important;
+                gap: 4px;
+                flex-wrap: nowrap;
             }
-            .icon-modal-actions .icon-modal-svglink {
-                margin-left: 0 !important;
-                justify-content: center;
-                width: auto;
+
+            .icon-modal-btn {
+                flex: none;
+                padding: 3px 6px;
+                font-size: 10px;
+                font-weight: 500;
+                border-radius: 6px;
+                text-align: center;
+                background: #fff;
+                border: 1px solid #ccc;
+                min-height: 0;
+                white-space: nowrap;
+                box-shadow: 0 1px 1px rgba(0,0,0,0.05);
             }
-            .icon-modal-custom-inputs {
-                flex-direction: row;
-                flex-wrap: wrap;
+
+            /* Cancel / OK inline with custom buttons */
+            .icon-modal-actions > div:last-child {
+                display: flex;
+                flex-direction: row !important;
+                gap: 4px;
+                margin-left: auto !important;
+                flex-wrap: nowrap;
             }
-            .icon-modal-custom-inputs input:last-child {
-                width: auto !important;
-                flex: 1;
+
+            .icon-btn-cancel,
+            .icon-btn-ok {
+                flex: none;
+                padding: 3px 10px;
+                font-size: 10px;
+                font-weight: 500;
+                border-radius: 6px;
+                text-align: center;
+                min-height: 0;
+                white-space: nowrap;
+                border: 1px solid #ccc;
+                cursor: pointer;
+            }
+
+            .icon-btn-cancel {
+                background: #fff;
+                color: #000;
+            }
+
+            .icon-btn-ok {
+                background: #fff;
+                color: #000;
+            }
+
+            .icon-btn-ok:active,
+            .icon-btn-cancel:active {
+                background: #f1f5f9;
+            }
+
+            .icon-modal-svglink {
+                margin-top: 4px !important;
+                display: block;
+                text-align: left;
+                font-size: 9px;
+                color: #187ef4;
             }
         }
     </style>
@@ -1275,13 +1492,14 @@ const CUSTOM_SVG_TEMPLATES = {
   'svg/dot-green': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="#00ff00"></circle></svg>',
   'svg/dot-yellow': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="#ffff00"></circle></svg>',
   'svg/dot-blue': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="#0000ff"></circle></svg>',
-  'svg/dot-orange': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="rgb(255,165,0)"></circle></svg>'
+  'svg/dot-orange': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="rgb(255,165,0)"></circle></svg>',
+  'svg/dot-green-dark': '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="#1da413"></circle></svg>'
 };
 
 const DEFAULT_GE_PADDLES = ['https://www.google.com/mapfiles/kml/paddle/blu-blank.png', 'https://www.google.com/mapfiles/kml/paddle/red-blank.png', 'https://www.google.com/mapfiles/kml/paddle/grn-blank.png', 'https://www.google.com/mapfiles/kml/paddle/ylw-blank.png', 'https://www.google.com/mapfiles/kml/paddle/purple-blank.png', 'https://www.google.com/mapfiles/kml/paddle/pink-blank.png', 'https://www.google.com/mapfiles/kml/paddle/ltblu-blank.png', 'https://www.google.com/mapfiles/kml/paddle/wht-blank.png'];
 
 const GE_ICONS_LIST = [
-  'svg/radio-tower', 'svg/dot', 'svg/dot-red', 'svg/dot-green', 'svg/dot-yellow', 'svg/dot-blue', 'svg/dot-orange',
+  'svg/radio-tower', 'svg/dot', 'svg/dot-red', 'svg/dot-green', 'svg/dot-yellow', 'svg/dot-blue', 'svg/dot-orange', 'svg/dot-green-dark',
   'pushpin/ylw-pushpin.png', 'pushpin/blue-pushpin.png', 'pushpin/grn-pushpin.png',
   'pushpin/ltblu-pushpin.png', 'pushpin/pink-pushpin.png', 'pushpin/purple-pushpin.png',
   'pushpin/red-pushpin.png', 'pushpin/wht-pushpin.png',
@@ -1324,7 +1542,7 @@ const getIconUrl = (url, color) => {
   if (!url || url === 'VECTOR_CIRCLE') return null;
   if (url.startsWith('svg/')) {
     const svgString = CUSTOM_SVG_TEMPLATES[url].replace(/{COLOR}/g, color || '#000000');
-    return `data:image/svg+xml;utf8,${encodeURIComponent(svgString)}`;
+    return `data:image/svg+xml;base64,${btoa(svgString)}`;
   }
   if (url.startsWith('http')) return url;
   if (url.startsWith('data:')) return url;
@@ -1410,8 +1628,10 @@ const MapView = ({
   const mapRef = useRef(null);
   const mapInst = useRef(null);
   const layerGroupRef = useRef(null);
+  const clusterGroupRef = useRef(null);
   const baseLayerRef = useRef(null);
   const boundsRef = useRef([]);
+  const [clusterEnabled, setClusterEnabled] = useState(true);
   const [legendStats, setLegendStats] = useState({
     total: 0,
     items: []
@@ -1465,12 +1685,19 @@ const MapView = ({
         errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMj56IiBoZWlnaHQ9IjI2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgZmlsbD0iI2YwZjBmMCIvPjwvc3ZnPg=='
       }).addTo(mapInst.current);
       layerGroupRef.current = L.layerGroup().addTo(mapInst.current);
+      clusterGroupRef.current = L.markerClusterGroup({
+        maxClusterRadius: 50,
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true
+      });
     }
     return () => {
       if (mapInst.current) {
         mapInst.current.remove();
         mapInst.current = null;
         layerGroupRef.current = null;
+        clusterGroupRef.current = null;
       }
     };
   }, []);
@@ -1492,6 +1719,14 @@ const MapView = ({
   useEffect(() => {
     if (!mapInst.current) return;
     layerGroupRef.current.clearLayers();
+    mapInst.current.removeLayer(layerGroupRef.current);
+    mapInst.current.removeLayer(clusterGroupRef.current);
+    if (clusterEnabled) {
+      clusterGroupRef.current.clearLayers();
+      mapInst.current.addLayer(clusterGroupRef.current);
+    } else {
+      mapInst.current.addLayer(layerGroupRef.current);
+    }
     if (!data.length || !mapping.lat || !mapping.lng) {
       setLegendStats({
         total: 0,
@@ -1505,6 +1740,7 @@ const MapView = ({
     const catIconsMap = {};
     let catIdx = 0;
     let totalPlotted = 0;
+    const activeGroup = clusterEnabled ? clusterGroupRef.current : layerGroupRef.current;
     data.forEach(row => {
       const lat = parseFloat(row[mapping.lat]);
       const lng = parseFloat(row[mapping.lng]);
@@ -1548,7 +1784,7 @@ const MapView = ({
           offset: [0, -(24 * markerSize)]
         });
       }
-      layerGroupRef.current.addLayer(marker);
+      activeGroup.addLayer(marker);
     });
     if (bounds.length > 0) {
       mapInst.current.fitBounds(bounds, {
@@ -1577,7 +1813,7 @@ const MapView = ({
         items: []
       });
     }
-  }, [data, mapping, markerSize, markerOpacity, markerIconUrl, colorMode, singleColor, categoryCol, colorAssignmentMode, manualCategoryStyles, showSiteLabels]);
+  }, [data, mapping, markerSize, markerOpacity, markerIconUrl, colorMode, singleColor, categoryCol, colorAssignmentMode, manualCategoryStyles, showSiteLabels, clusterEnabled]);
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -1712,7 +1948,16 @@ const MapView = ({
     className: "map-control-btn",
     onClick: centerOnData,
     title: "Center on Data"
-  }, /*#__PURE__*/React.createElement(Icons.Maximize, null))));
+  }, /*#__PURE__*/React.createElement(Icons.Maximize, null)), /*#__PURE__*/React.createElement("button", {
+    className: "map-control-btn" + (clusterEnabled ? ' cluster-active' : ''),
+    onClick: () => setClusterEnabled(c => !c),
+    title: clusterEnabled ? "Disable Clustering" : "Enable Clustering"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: clusterEnabled ? "https://img.icons8.com/?size=100&id=5qzpYc5HfmXu&format=png&color=ffffff" : "https://img.icons8.com/?size=100&id=5qzpYc5HfmXu&format=png&color=000000",
+    width: "18",
+    height: "18",
+    style: { pointerEvents: 'none' }
+  }))));
 };
 const MAP_THUMBNAILS = {
   light: 'https://basemaps.cartocdn.com/light_all/3/4/3.png',
@@ -1962,9 +2207,7 @@ var ModernIconPickerInner = function(props) {
           React.createElement("button", { className: "icon-btn-ok", onClick: function() { onSelect({ url: selectedIcon, color: selectedColor, scale: selectedScale, opacity: selectedOpacity }); onClose(); } }, "OK")
         )
       ),
-      React.createElement("div", { style: { display: 'flex', justifyContent: 'flex-start' } },
-        React.createElement("a", { href: "https://www.svgrepo.com/", target: "_blank", rel: "noreferrer", className: "icon-modal-svglink" }, "Download icons at svgrepo.com")
-      )
+      React.createElement("a", { href: "https://www.svgrepo.com/", target: "_blank", rel: "noreferrer", className: "icon-modal-svglink" }, "Download icons at svgrepo.com")
     )
 
   ));
@@ -1979,14 +2222,14 @@ const App = () => {
     siteName: '',
     popupCols: []
   });
-  const [markerIconUrl, setMarkerIconUrl] = useState('https://maps.google.com/mapfiles/kml/paddle/red-blank.png');
+  const [markerIconUrl, setMarkerIconUrl] = useState('http://maps.google.com/mapfiles/kml/paddle/grn-blank.png');
   const [showIconPicker, setShowIconPicker] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [pickerTarget, setPickerTarget] = useState(null);
-  const [markerSize, setMarkerSize] = useState(1.0);
+  const [markerSize, setMarkerSize] = useState(0.5);
   const [markerOpacity, setMarkerOpacity] = useState(100);
   const [colorMode, setColorMode] = useState('single');
-  const [singleColor, setSingleColor] = useState('#2563eb');
+  const [singleColor, setSingleColor] = useState('#ff0000');
   const [categoryCol, setCategoryCol] = useState('');
   const [colorAssignmentMode, setColorAssignmentMode] = useState('manual');
   const [manualCategoryStyles, setManualCategoryStyles] = useState({});
@@ -2193,7 +2436,7 @@ const App = () => {
         const val = String(row[categoryCol]);
         styleId = 'cat_' + val.replace(/[^a-z0-9]/gi, '_');
       }
-      kml += '  <Placemark>\n    <name>' + escapeXml(siteName) + '</name>\n    <description>' + desc + '</description>\n    <styleUrl>#' + styleId + '</styleUrl>\n    <Point><coordinates>' + lng + ',' + lat + ',0</coordinates></Point>\n  </Placemark>\n';
+      kml += '  <Placemark>\n    <name>' + (showSiteLabels ? escapeXml(siteName) : '') + '</name>\n    <description>' + desc + '</description>\n    <styleUrl>#' + styleId + '</styleUrl>\n    <Point><coordinates>' + lng + ',' + lat + ',0</coordinates></Point>\n  </Placemark>\n';
     });
     kml += '</Document>\n</kml>';
     const zip = new JSZip();
@@ -2203,7 +2446,6 @@ const App = () => {
       const svgString = CUSTOM_SVG_TEMPLATES[entry.url].replace(/{COLOR}/g, entry.color);
       const blob = await new Promise((resolve) => {
         const img = new Image();
-        img.crossOrigin = 'anonymous';
         img.onload = () => {
           const canvas = document.createElement('canvas');
           canvas.width = 64; canvas.height = 64;
@@ -2212,7 +2454,7 @@ const App = () => {
           canvas.toBlob(resolve, 'image/png');
         };
         img.onerror = () => resolve(null);
-        img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgString);
+        img.src = 'data:image/svg+xml;base64,' + btoa(svgString);
       });
       if (blob) {
         imagesFolder.file(entry.filename, blob);
@@ -2752,7 +2994,7 @@ const App = () => {
     }
   }, /*#__PURE__*/React.createElement("input", {
     type: "range",
-    min: "0.5",
+    min: "0.1",
     max: "3.0",
     step: "0.1",
     style: {
